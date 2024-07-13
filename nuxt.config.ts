@@ -2,28 +2,23 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
+    // "@nuxtjs/tailwindcss",
     "@nuxt/eslint",
-    "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "@nuxtjs/i18n",
-    "@nuxtjs/supabase"
+    "@nuxtjs/supabase",
+    "@nuxt/ui"
   ],
-  runtimeConfig: {
-    turso: {
-      databaseUrl: process.env.NUXT_DATABASE_URL,
-      databaseToken: process.env.NUXT_DATABASE_TOKEN,
-    },
-  },
   supabase: {
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
     redirectOptions: {
-    login: '/',
-    callback: '/',
-    include: undefined,
-    exclude: [],
-    cookieRedirect: false,
-  }
+      login: '/auth',
+      callback: '/',
+      include: ['/admin'],
+      exclude: [],
+      cookieRedirect: false,
+    }
   },
   app: {
     head: {
@@ -41,4 +36,11 @@ export default defineNuxtConfig({
     },
   },
   ssr: true,
+
+  // runtimeConfig: {
+  //   turso: {
+  //     databaseUrl: process.env.NUXT_DATABASE_URL,
+  //     databaseToken: process.env.NUXT_DATABASE_TOKEN,
+  //   },
+  // },
 })
