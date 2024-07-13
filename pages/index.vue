@@ -24,7 +24,7 @@ const handleFileChange = (e) => {
 const submit = async () => {
   const formData = new FormData()
   formData.append('name', form.value.name)
-  formData.append('image', form.value.image)
+  form.value.image && formData.append('image', form.value.image)
 
   const data = await $fetch('/api/product/create', {
     method: 'post',
