@@ -3,11 +3,7 @@ definePageMeta({
   layout: "auth",
 })
 
-const colorMode = useColorMode()
 
-const toggleTheme = () => {
-  colorMode.preference = colorMode.preference === 'light' ? 'dark' : 'light'
-}
 </script>
 
 <template>
@@ -31,7 +27,7 @@ const toggleTheme = () => {
           placeholder="Contraseña"
           class="w-full"
         />
-        <UButton color="cyan" block @click="toggleTheme">
+        <UButton color="cyan" block>
           <span class="text-center">Iniciar Sesión</span>
         </UButton>
       </div>
