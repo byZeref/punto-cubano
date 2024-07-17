@@ -6,5 +6,5 @@ export const useSupabase = async (event: H3Event) => {
   const client = await serverSupabaseClient(event)
 
 
-  return { client }
+  return { supabase: client }
 }

@@ -12,7 +12,7 @@ type Product = {
 }
 
 export default defineEventHandler(async (event) => {
-  const { client } = await useSupabase(event)
+  const { supabase } = await useSupabase(event)
   const form = await readMultipartFormData(event)
   const hasImage = form![1] !== undefined
   let fileName
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
     
   console.log(payload)
 
-  const { status, error: insertError } = await client
+  const { status, error: insertError } = await supabase
     .from('products')
     .insert(product)
 
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
   console.log('status create', status)
 
   if (status === 201 && hasImage) {
-    const { data, error: uploadError } = await client.storage
+    const { data, error: uploadError } = await supabase.storage
       .from('products')
       .upload(fileName, payload.image)
 
