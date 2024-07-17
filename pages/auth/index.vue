@@ -3,6 +3,7 @@ definePageMeta({
   layout: "auth",
 })
 
+const authStore = useAuthStore()
 const router = useRouter()
 const form = ref({
   email: 'sandorsc941018@gmail.com',
@@ -23,7 +24,9 @@ const login = async () => {
     }
     return
   }
+
   console.log(data)
+  authStore.saveUserData(data)
   return router.push('/admin')
 }
 

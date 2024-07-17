@@ -6,5 +6,6 @@ export default withNuxt({
     '@typescript-eslint/no-unused-vars': 'off',
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
+    'vue/attributes-order': 'off',
   }
 })

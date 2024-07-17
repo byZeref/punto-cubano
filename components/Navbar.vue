@@ -2,8 +2,13 @@
 const colorMode = useColorMode()
 const isDarkMode = computed(() => colorMode.preference === 'dark')
 
+const authStore = useAuthStore()
 const toggleMode = () => {
   colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
+}
+
+const logout = () => {
+  // TODO logout in api
 }
 
 </script>
@@ -19,7 +24,8 @@ const toggleMode = () => {
       <div>
         <RouterLink class="router-link" to="/">Home</RouterLink>
         <RouterLink class="router-link" to="/products">Products</RouterLink>
-        <RouterLink class="router-link" to="/auth">Login</RouterLink>
+        <RouterLink v-if="!authStore.isLogged" class="router-link" to="/auth">Login</RouterLink>
+        <span v-else @click="logout" class="router-link cursor-pointer">Logout</span>
       </div>
 
       <div class="flex items center gap-4">
