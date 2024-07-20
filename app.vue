@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const authStore = useAuthStore()
 
-onBeforeMount(() => authStore.loadLocalStorageData())
 </script>
 
 <template>

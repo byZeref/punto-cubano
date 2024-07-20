@@ -1,12 +1,9 @@
 import type { User, UserData, AuthError } from '@/utils/types'
 
 export const useAuthStore = defineStore('auth', () => {
-  const storage = useLocalStorage()
-  const router = useRouter()
-
-  const user: Ref<User | undefined> = ref(undefined)
-  const access_token: Ref<string | undefined> = ref(undefined)
-  const refresh_token: Ref<string | undefined> = ref(undefined)
+  const user = useCookie<User | undefined>('auth')
+  const access_token = useCookie<string | undefined>('ac_token')
+  const refresh_token = useCookie<string | undefined>('ref_token')
   const isLogged = computed(() => !!user.value)
 
   const login = async (payload: object) => {
@@ -27,7 +24,6 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = async () => {
     await $fetch('/api/auth/logout', { method: 'post' })
     reset()
-    removeFromLocalStorage('auth')
   }
 
 
@@ -35,31 +31,16 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = data.user
     access_token.value = data.access_token
     refresh_token.value = data.refresh_token
-    saveToLocalStorage('auth', data)
   }
 
-  const saveToLocalStorage = (name: string, data: UserData) => {
-    storage.save(name, data)
-  }
-  const removeFromLocalStorage = (name: string) => {
-    storage.remove(name)
-  }
-  
   const reset = () => {
     user.value = undefined
     access_token.value = undefined
     refresh_token.value = undefined
   }
-  
-  const loadLocalStorageData = () => {
-    user.value = storage.get('auth')?.user
-    access_token.value = storage.get('auth')?.access_token
-    refresh_token.value = storage.get('auth')?.refresh_token
-  }
-
 
   return {
-    user, isLogged, access_token, refresh_token, 
-    loadLocalStorageData, login, logout
+    user, isLogged, access_token, refresh_token,
+    login, logout,
   }
 })
