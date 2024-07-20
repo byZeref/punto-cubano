@@ -1,8 +1,10 @@
 <script setup>
+import { error_types } from '@/utils/constants'
 definePageMeta({
   layout: "auth",
 })
 
+const { AUTH_API_ERROR } = error_types
 const authStore = useAuthStore()
 const router = useRouter()
 const form = ref({
@@ -12,22 +14,17 @@ const form = ref({
 
 const login = async () => {
   const payload = { ...form.value }
-  const { data, error } = await $fetch('/api/auth/login', {
-    method: 'post',
-    body: payload,
-  })
+  const { data, error } = await authStore.login(payload)
   if (error) {
-    console.error('error', error)
-    if (error.status === 400 && error.name === 'AuthApiError') {
-      // TODO handle error with modal
+    console.error('error on login', error)
+    // TODO handle error with modal and extract logic to new file
+    if (error.status === 400 && error.name === AUTH_API_ERROR) {
       console.log('invalid credentials');
     }
-    return
   }
-
-  console.log(data)
-  authStore.saveUserData(data)
-  return router.push('/admin')
+  else if (data) {
+    return router.push('/admin')
+  }
 }
 
 </script>

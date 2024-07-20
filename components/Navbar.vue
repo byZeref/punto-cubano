@@ -8,7 +8,7 @@ const toggleMode = () => {
 }
 
 const logout = () => {
-  // TODO logout in api
+  return authStore.logout()
 }
 
 </script>

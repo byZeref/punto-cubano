@@ -1,5 +1,4 @@
 export default defineEventHandler(async (event) => {
-  const { email, password } = await readBody(event)
   const { supabase } = await useSupabase(event)
 
   const { error } = await supabase.auth.signOut()
@@ -8,10 +7,5 @@ export default defineEventHandler(async (event) => {
     console.error('error on logout', error)
     return { error }
   }
-  
-  return {
-    data: {
-      
-    }
-  }
+  return { data: { ok: true } }
 })
