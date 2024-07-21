@@ -4,7 +4,7 @@
 
 <template>
   <NuxtLayout>
-      <NuxtLoadingIndicator color="#4c1b1e" />
+      <NuxtLoadingIndicator color="#7f2c30" />
       <NuxtPage />
   </NuxtLayout>
 </template>
