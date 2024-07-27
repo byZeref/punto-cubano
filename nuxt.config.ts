@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     head: {
       title: 'Punto Cubano',
       meta: [
+        { name: 'theme-color', content: '#4c1b1e' },
         { name: 'description', content: 'Tienda de productos cubanos' },
         { property: 'og:title', content: 'Punto Cubano' },
         { property: 'og:description', content: 'Tienda de productos cubanos' },
@@ -36,7 +37,7 @@ export default defineNuxtConfig({
       ]
     },
   },
-  ssr: true,
+  ssr: false,
   // routeRules: {
   //   '/admin': { ssr: false }
   // }

@@ -1,21 +1,35 @@
 :root {
-  --primary-color: #4c1b1e;
+  --primary-color: #7f2c30;
+  --primary-color-soft: #4c1b1e;
   --text-color: #000;
-  --background-color: #fff;
+  --background-color:#FAFAFA;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #7f2c30;
-    --text-color: #fff;
-    --background-color: #1B2430;
-  }
+:root.dark {
+  --primary-color: #fff;
+  --text-color: #fff;
+  --background-color: #1B2430;
+}
+
+.focus-visible\:ring-primary-500:focus-visible, .dark\:focus-visible\:ring-primary-400:focus-visible:is(.dark *) {
+  --tw-ring-color: transparent;
+}
+*::selection {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+body {
+  background-color: var(--background-color);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html, .navbar {
   transition: background-color .3s;
   &.dark {
-    background-color: var(--background-color);
+    background-color: var(--background-color) !important;
   }
 }
 
@@ -25,9 +39,13 @@ html, .navbar {
 
   &-active {
     color: var(--primary-color) !important;
+    font-weight: bold;
   }
 }
 
 .logo-name span {
   color: var(--primary-color);
+}
+.logo-img {
+  user-select: none;
 }

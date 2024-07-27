@@ -3,7 +3,7 @@
     <Navbar />
   </header>
   
-  <main>
+  <main class="mt-20 lg:mt-28 px-5 lg:px-20 max-w-3xl mx-auto">
     <slot />
   </main>
 
@@ -11,3 +11,7 @@
     <!-- <Footer class="footer" /> -->
   </footer>
 </template>
+
+<style scoped>
+
+</style>

@@ -30,6 +30,7 @@ const login = async () => {
 </script>
 
 <template>
+  <!-- TODO fix design -->
   <div class="flex flex-col justify-center items-center h-screen">
     <UCard>
       <h3 class="text-2xl text-center">Login Page</h3>

@@ -7,5 +7,6 @@ export default withNuxt({
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/attributes-order': 'off',
+    'vue/require-default-prop': 'off',
   }
 })

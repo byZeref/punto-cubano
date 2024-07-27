@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <h3  class="text-2xl text-center">Products Page</h3>
+  <section>
+    <h3  class="text-2xl text-center">Products Page</h3>
+  </section>
 </template>
 
 <style scoped>

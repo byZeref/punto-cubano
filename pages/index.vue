@@ -3,8 +3,8 @@
 //   method: 'get'
 // })
 
-const { data } = await useFetch('/api/product/all', 'get')
-console.log(data)
+// const { data } = await useFetch('/api/product/all', 'get')
+// console.log(data)
 
 const form = ref({
   name: '',
@@ -37,7 +37,7 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto">
+  <section>
     <h1 class="text-3xl text-center mb-10">Home Page</h1>
 
     <form class="flex flex-col gap-4" @submit.prevent="submit">
@@ -53,7 +53,7 @@ const submit = async () => {
         Enviar
       </button>
     </form>
-  </div>
+  </section>
 </template>
 
 <style scoped>
