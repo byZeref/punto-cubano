@@ -11,13 +11,18 @@
   --background-color: #1B2430;
 }
 
+*::selection {
+  background-color: #4c1b1e !important;
+  color: #fff !important;
+}
 .focus-visible\:ring-primary-500:focus-visible, .dark\:focus-visible\:ring-primary-400:focus-visible:is(.dark *) {
   --tw-ring-color: transparent;
 }
-*::selection {
-  background-color: var(--primary-color) !important;
-  color: #fff !important;
+.focus\:ring-primary-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: var(--primary-color) !important;
 }
+
 
 body {
   background-color: var(--background-color);
