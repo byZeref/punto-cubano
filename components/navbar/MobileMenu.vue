@@ -4,7 +4,11 @@ import IconShoppingBag  from '~/components/icons/IconShoppingBag.vue'
 import IconShoppingCart  from '~/components/icons/IconShoppingCart.vue'
 import IconContactUs  from '~/components/icons/IconContactUs.vue'
 import IconLogout  from '~/components/icons/IconLogout.vue'
+import IconAdmin  from '~/components/icons/IconAdmin.vue'
 import CompanyMobile from '~/components/navbar/CompanyMobile.vue'
+import {useAuthStore} from '@/stores/auth'
+const store = useAuthStore()
+const user = computed(() => store.user)   
 
 const emit = defineEmits(['close'])
 const props = defineProps({
@@ -42,9 +46,6 @@ const getColor = (iconRoute) => {
     : route.path === iconRoute ? 'var(--primary-color)' : 'black'
 }
 
-const goHome = () => {
-  console.log('go home')
-}
 </script>
 
 <template>
@@ -61,31 +62,34 @@ const goHome = () => {
         @click="opened = false"
       />
       <CompanyMobile :is-open="isOpen" :is-dark-mode="isDarkMode" @click="opened = false" />
-      <div class="px-4">
-        
-        <div class="pt-12 flex flex-col gap-7">
-          <NuxtLink class="flex items-center gap-2" to="/" @click="opened = false">
-            <!-- <IconHome :color="isDarkMode ? '#fff' : 'black'" /> -->
-            <IconHome :color="getColor('/')" />
-            <span class="text-lg">Inicio</span>
-          </NuxtLink>
-          <NuxtLink class="flex items-center gap-2" to="/products" @click="opened = false">
-            <IconShoppingBag :color="getColor('/products')" />
-            <span class="text-lg">Productos</span>
-          </NuxtLink>
-          <NuxtLink class="flex items-center gap-2" to="/cart" @click="opened = false">
-            <IconShoppingCart :color="getColor('/cart')" />
-            <span class="text-lg">Carrito</span>
-          </NuxtLink>
-          <NuxtLink class="flex items-center gap-2" to="/contact" @click="opened = false">
-            <IconContactUs :color="getColor('/contact')" />
-            <span class="text-lg">Contacténos</span>
-          </NuxtLink>
-          <NuxtLink v-if="isLogged" class="flex items-center gap-2" @click="logout">
-            <IconLogout :color="isDarkMode ? '#fff' : 'black'" />
-            <span class="text-lg">Cerrar Sesión</span>
-          </NuxtLink>
-        </div>
+      <div class="px-4 pt-12 flex flex-col gap-7">
+        <NuxtLink class="flex items-center gap-2" to="/" @click="opened = false">
+          <IconHome :color="getColor('/')" />
+          <span class="text-lg">Inicio</span>
+        </NuxtLink>
+        <NuxtLink class="flex items-center gap-2" to="/products" @click="opened = false">
+          <IconShoppingBag :color="getColor('/products')" />
+          <span class="text-lg">Productos</span>
+        </NuxtLink>
+        <NuxtLink class="flex items-center gap-2" to="/cart" @click="opened = false">
+          <IconShoppingCart :color="getColor('/cart')" />
+          <span class="text-lg">Carrito</span>
+        </NuxtLink>
+        <NuxtLink class="flex items-center gap-2" to="/contact" @click="opened = false">
+          <IconContactUs :color="getColor('/contact')" />
+          <span class="text-lg">Contacténos</span>
+        </NuxtLink>
+        <NuxtLink class="flex items-center gap-2" to="/admin" @click="opened = false">
+          <IconAdmin :color="getColor('/admin')" />
+          <span class="text-lg">Administrar</span>
+        </NuxtLink>
+        <NuxtLink v-if="isLogged" class="flex items-center gap-2" @click="logout">
+          <IconLogout :color="isDarkMode ? '#fff' : 'black'" />
+          <span class="text-lg">Cerrar Sesión</span>
+        </NuxtLink>
+      </div>
+      <div class="user-info">
+        <p class="text-center mx-auto">{{ user?.email || 'user@mail.com' }}</p>
       </div>
     </div>
   </USlideover>
@@ -95,5 +99,17 @@ const goHome = () => {
 button {
   background-color: #4c1b1e1e;
   top: 17px;
+}
+.user-info {
+  position: absolute;
+  bottom: 12px;
+  display: flex;
+  width: calc(100% - 32px);
+  p {
+    background-color: #7f2c30;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
 }
 </style>

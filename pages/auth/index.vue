@@ -23,7 +23,7 @@ const login = async () => {
     console.error('error on login', error)
     // TODO handle error with modal and extract logic to new file
     if (error.status === 400 && error.name === AUTH_API_ERROR) {
-      console.log('invalid credentials');
+      console.log('invalid credentials')
     }
   }
   else if (data) {
@@ -68,7 +68,7 @@ const btnUI = {
             class="w-full"
             :disabled="loading"
           />
-            <UInput
+          <UInput
             v-model="form.password"
             :type="passwordType"
             color="white"

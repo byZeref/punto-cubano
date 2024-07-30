@@ -13,11 +13,12 @@ export default defineNuxtConfig({
   supabase: {
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
+    redirect: false,
     redirectOptions: {
       login: '/auth',
       callback: '/',
       include: ['/admin'],
-      exclude: [],
+      exclude: ['/', '/products', '/cart', '/contact'],
       cookieRedirect: false,
     }
   },
