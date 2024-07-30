@@ -56,8 +56,8 @@ const getColor = (iconRoute) => {
         padded
         @click="opened = false"
       />
+      <CompanyMobile :is-open="isOpen" :is-dark-mode="isDarkMode" />
       <div class="px-4">
-        <CompanyMobile :is-open="isOpen" :is-dark-mode="isDarkMode" />
         
         <div class="pt-12 flex flex-col gap-7">
           <NuxtLink class="flex items-center gap-2" to="/" @click="opened = false">
@@ -90,6 +90,6 @@ const getColor = (iconRoute) => {
 <style scoped>
 button {
   background-color: #4c1b1e1e;
-  top: 12px;
+  top: 17px;
 }
 </style>
