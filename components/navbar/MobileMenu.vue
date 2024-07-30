@@ -41,6 +41,10 @@ const getColor = (iconRoute) => {
     ? '#fff'
     : route.path === iconRoute ? 'var(--primary-color)' : 'black'
 }
+
+const goHome = () => {
+  console.log('go home')
+}
 </script>
 
 <template>
@@ -56,7 +60,7 @@ const getColor = (iconRoute) => {
         padded
         @click="opened = false"
       />
-      <CompanyMobile :is-open="isOpen" :is-dark-mode="isDarkMode" />
+      <CompanyMobile :is-open="isOpen" :is-dark-mode="isDarkMode" @click="opened = false" />
       <div class="px-4">
         
         <div class="pt-12 flex flex-col gap-7">
