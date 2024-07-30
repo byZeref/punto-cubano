@@ -12,15 +12,15 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex items center gap-2 lg:gap-4">
-    <div class="cursor-pointer" @click="toggleMode">
+  <div class="flex items-center gap-1">
+    <div class="cursor-pointer p-[6px] rounded-md hover:bg-gray-300 dark:hover:bg-gray-700" @click="toggleMode">
       <IconSun v-if="isDarkMode" color="#fff" /> 
       <IconMoon v-else color="#4c1b1e" /> 
     </div>
-    <div class="cursor-pointer">
+    <div class="cursor-pointer p-[6px] rounded-md hover:bg-gray-300 dark:hover:bg-gray-700">
       <IconLanguage :color="isDarkMode ? '#fff' : '#4c1b1e'" /> 
     </div>
-    <div class="cursor-pointer">
+    <div class="cursor-pointer p-[6px] rounded-md hover:bg-gray-300 dark:hover:bg-gray-700">
       <IconShoppingCart :color="isDarkMode ? '#fff' : '#4c1b1e'" /> 
     </div>
   </div>
