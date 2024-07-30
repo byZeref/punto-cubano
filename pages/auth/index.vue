@@ -28,6 +28,7 @@ const login = async () => {
   }
   else if (data) {
     return router.push('/admin')
+    // TODO admin middleware
   }
 }
 

@@ -88,8 +88,8 @@ const getColor = (iconRoute) => {
           <span class="text-lg">Cerrar Sesión</span>
         </NuxtLink>
       </div>
-      <div class="user-info">
-        <p class="text-center mx-auto">{{ user?.email || 'user@mail.com' }}</p>
+      <div v-if="user" class="user-info">
+        <p class="text-center mx-auto">{{ user.email }}</p>
       </div>
     </div>
   </USlideover>
