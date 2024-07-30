@@ -6,7 +6,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="max-lg:hidden">
+  <div class="max-lg:hidden flex gap-[2px] items-center">
     <NuxtLink 
       class="router-link text-slate-700 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 hover:text-[#7f2c30] duration-100" 
       to="/"

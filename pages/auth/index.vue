@@ -2,6 +2,7 @@
 import { error_types } from '@/utils/constants'
 definePageMeta({
   layout: "auth",
+  middleware: 'auth',
 })
 
 const { AUTH_API_ERROR } = error_types
@@ -28,7 +29,6 @@ const login = async () => {
   }
   else if (data) {
     return router.push('/admin')
-    // TODO admin middleware
   }
 }
 

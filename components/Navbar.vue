@@ -41,7 +41,7 @@ onMounted(() => isDarkMode.value = colorMode.preference === 'dark')
 
 <template>
   <div :class="['navbar w-full h-14 lg:h-16 bg-white text-slate-600 mb-10 dark:bg-[#151d26]', { dark: isDarkMode }]">
-    <div class="w-full h-full max-w-5xl flex items-center justify-between mx-auto px-5 lg:px-10">
+    <div class="w-full h-full max-w-6xl flex items-center justify-between mx-auto px-5 lg:px-10">
       <CompanyDesktop />
 
       <DesktopLinks :is-logged="authStore.isLogged" :logout="logout" />
