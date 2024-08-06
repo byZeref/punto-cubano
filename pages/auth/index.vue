@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { error_types } from '@/utils/constants'
 definePageMeta({
   layout: "auth",
@@ -14,18 +14,16 @@ const form = ref({
   email: 'sandorsc941018@gmail.com',
   password: 'Zeref.cubano',
 })
+const error = inject('error') as Ref<string | null>
 
 const login = async () => {
   const payload = { ...form.value }
   loading.value = true
-  const { data, error } = await authStore.login(payload)
+  const { data, error: e } = await authStore.login(payload)
     .finally(() => { loading.value = false })
-  if (error) {
-    console.error('error on login', error)
-    // TODO handle error with modal and extract logic to new file
-    if (error.status === 400 && error.name === AUTH_API_ERROR) {
-      console.log('invalid credentials')
-    }
+  if (e) {
+    console.error('error on login', e)
+    error.value = handleError(e)
   }
   else if (data) {
     return router.push('/admin')

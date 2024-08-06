@@ -3,12 +3,14 @@
   --primary-color-soft: #4c1b1e;
   --text-color: #000;
   --background-color:#FAFAFA;
+  --error-color: #EF4444;
 }
 
 :root.dark {
   --primary-color: #fff;
   --text-color: #fff;
   --background-color: #1B2430;
+  --error-color: #F87171;
 }
 
 *::selection {
