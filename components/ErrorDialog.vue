@@ -24,7 +24,7 @@ watchEffect(() => {
       <h4 class="text-[var(--error-color)] font-semibold text-xl">Error!</h4>
     </template>
     <template #body>
-      <div class="flex items-center gap-1 text-slate-700">
+      <div class="flex items-center gap-1 text-slate-700 dark:text-slate-200">
         <UIcon name="i-heroicons-exclamation-triangle" class="min-w-7 min-h-7" />
         <span>{{ message }}</span>
       </div>
