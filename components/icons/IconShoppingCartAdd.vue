@@ -22,13 +22,14 @@ defineProps({
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-      <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-      <path d="M17 17h-11v-14h-2" />
-      <path d="M6 5l14 1l-1 7h-13" />
-    </svg>
+    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-plus"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M12.5 17h-6.5v-14h-2" />
+    <path d="M6 5l14 1l-.86 6.017m-2.64 .983h-10.5" />
+    <path d="M16 19h6" />
+    <path d="M19 16v6" />
+  </svg>
 </template>
 

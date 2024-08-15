@@ -9,5 +9,6 @@ export default withNuxt({
     'vue/attributes-order': 'off',
     'vue/require-default-prop': 'off',
     'vue/html-self-closing': 'off',
+    'vue/first-attribute-linebreak': 'off',
   }
 })

@@ -1,12 +1,4 @@
 <script setup>
-import IconHome from '~/components/icons/IconHome.vue'
-import IconShoppingBag  from '~/components/icons/IconShoppingBag.vue'
-import IconShoppingCart  from '~/components/icons/IconShoppingCart.vue'
-import IconContactUs  from '~/components/icons/IconContactUs.vue'
-import IconLogout  from '~/components/icons/IconLogout.vue'
-import IconMoon  from '~/components/icons/IconMoon.vue'
-import IconSun  from '~/components/icons/IconSun.vue'
-import IconLanguage  from '~/components/icons/IconLanguage.vue'
 import CompanyDesktop from '~/components/navbar/CompanyDesktop.vue'
 import CompanyMobile from '~/components/navbar/CompanyMobile.vue'
 import ActionButtons from '~/components/navbar/ActionButtons.vue'
