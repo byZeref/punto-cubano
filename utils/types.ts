@@ -14,3 +14,14 @@ export type AuthError = {
   status: number,
   __isAuthError: boolean,
 }
+
+export interface Product {
+  id: number,
+  created_at: string,
+  name: string,
+  description: string,
+  image: string,
+  imageUrl?: string,
+  // price: number,
+  // category: string,
+}
