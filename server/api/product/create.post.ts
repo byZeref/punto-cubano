@@ -1,14 +1,10 @@
 import { useSupabase } from "~/server/utils/supabase";
+import type { Product } from "~/utils/types";
 
 type Payload = {
   name: string,
   description: string,
   image?: BlobPart
-}
-type Product = {
-  name: string,
-  description: string,
-  image?: string
 }
 
 export default defineEventHandler(async (event) => {

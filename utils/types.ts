@@ -16,11 +16,11 @@ export type AuthError = {
 }
 
 export interface Product {
-  id: number,
-  created_at: string,
+  id?: number,
+  created_at?: string,
   name: string,
   description: string,
-  image: string,
+  image?: string,
   imageUrl?: string,
   // price: number,
   // category: string,
