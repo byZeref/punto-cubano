@@ -23,7 +23,7 @@ const login = async () => {
     .finally(() => { loading.value = false })
   if (e) {
     console.error('error on login', e)
-    error.value = handleError(e)
+    error.value = handleError(e)!
   }
   else if (data) {
     return router.push('/admin')

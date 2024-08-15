@@ -8,5 +8,6 @@ export default withNuxt({
     'vue/multi-word-component-names': 'off',
     'vue/attributes-order': 'off',
     'vue/require-default-prop': 'off',
+    'vue/html-self-closing': 'off',
   }
 })

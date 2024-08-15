@@ -1,10 +1,12 @@
 <script setup>
+// TODO load all orders
 
 </script>
 
 <template>
   <section>
-    <h3 class="text-2xl text-center">Admin Page</h3>
+    <PageHeader title="Listado de pedidos" />
+
   </section>
 </template>
 

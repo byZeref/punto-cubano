@@ -5,10 +5,11 @@ import IconShoppingCart  from '~/components/icons/IconShoppingCart.vue'
 import IconContactUs  from '~/components/icons/IconContactUs.vue'
 import IconLogout  from '~/components/icons/IconLogout.vue'
 import IconAdmin  from '~/components/icons/IconAdmin.vue'
+import IconOrders  from '~/components/icons/IconOrders.vue'
 import CompanyMobile from '~/components/navbar/CompanyMobile.vue'
 import {useAuthStore} from '@/stores/auth'
 const store = useAuthStore()
-const user = computed(() => store.user)   
+const user = computed(() => store.user)
 
 const emit = defineEmits(['close'])
 const props = defineProps({
@@ -71,17 +72,17 @@ const getColor = (iconRoute) => {
           <IconShoppingBag :color="getColor('/products')" />
           <span class="text-lg">Productos</span>
         </NuxtLink>
-        <NuxtLink class="flex items-center gap-2" to="/cart" @click="opened = false">
+        <NuxtLink v-if="!isLogged" class="flex items-center gap-2" to="/cart" @click="opened = false">
           <IconShoppingCart :color="getColor('/cart')" />
           <span class="text-lg">Carrito</span>
         </NuxtLink>
-        <NuxtLink class="flex items-center gap-2" to="/contact" @click="opened = false">
+        <NuxtLink v-if="!isLogged" class="flex items-center gap-2" to="/contact" @click="opened = false">
           <IconContactUs :color="getColor('/contact')" />
           <span class="text-lg">Contacténos</span>
         </NuxtLink>
         <NuxtLink class="flex items-center gap-2" to="/admin" @click="opened = false">
-          <IconAdmin :color="getColor('/admin')" />
-          <span class="text-lg">Administrar</span>
+          <IconOrders :color="getColor('/admin')" />
+          <span class="text-lg">Pedidos</span>
         </NuxtLink>
         <NuxtLink v-if="isLogged" class="flex items-center gap-2" @click="logout">
           <IconLogout :color="isDarkMode ? '#fff' : 'black'" />
