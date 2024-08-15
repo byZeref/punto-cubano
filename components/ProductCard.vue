@@ -31,9 +31,16 @@ const getPriceDecimal = (price) => {
   return decimal.length > 1 ? decimal : `${decimal}0`
 }
 
-const addToCart = (id) => {
+const handleAddProductToCart = (id) => {
   console.log('add product to cart', id)
 }
+const handleEditProduct = (id) => {
+  console.log('edit product', id)
+}
+const handleRemoveProduct = (id) => {
+  console.log('remove product', id)
+}
+
 </script>
 
 <template>
@@ -54,16 +61,17 @@ const addToCart = (id) => {
             <span class="font-medium text-2xl lg:text-3xl tracking-tighter">{{ getPriceInteger(data.price) }}</span><span class="font-medium text-base lg:text-lg">.{{ getPriceDecimal(data.price) }}</span>
           </span>
           <div class="flex gap-1 absolute right-2 bottom-2">
-            <!-- v-if="isLogged" -->
+            <!-- TODO v-if="isLogged" -->
             <div
               class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
-              @click="addToCart(data.id)"
+              @click="handleAddProductToCart(data.id)"
             >
               <IconShoppingCartAdd :color="isDarkMode ? '#fff' : 'black'" />
             </div>
-            <!-- v-else -->
+            <!-- TODO v-else -->
             <div class="flex gap-1">
               <UButton
+                @click="handleEditProduct(data.id)"
                 :ui="{ rounded: 'rounded-full' }"
                 icon="i-heroicons-pencil-square"
                 size="sm"
@@ -72,6 +80,7 @@ const addToCart = (id) => {
                 variant="solid"
               />
               <UButton
+                @click="handleRemoveProduct(data.id)"
                 :ui="{ rounded: 'rounded-full' }"
                 icon="i-heroicons-trash"
                 size="sm"

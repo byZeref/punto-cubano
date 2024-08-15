@@ -5,12 +5,24 @@
 const isDarkMode = useCookie('dark')
 const authStore = useAuthStore()
 const isLogged = computed(() => authStore.isLogged)
+const btnUI = {
+  color: {
+    primary: {
+      solid: `shadow-sm text-white dark:text-white bg-[#4c1b1e] hover:bg-[#4c1b1ef0] disabled:bg-[#4c1b1e] 
+      dark:bg-[#4c1b1e] dark:hover:bg-[#4c1b1ed0] dark:disabled:bg-[#4c1b1e]`,
+    },
+  }
+}
 
 const prods = ref([])
 const loadProducts = async () => {
   const { data } = await $fetch('/api/product/all', { method: 'get'})
   console.log('data', data.products)
   prods.value = data.products
+}
+
+const handleNewProduct = () => {
+  console.log('create new product')
 }
 
 onMounted(() => {
@@ -20,7 +32,19 @@ onMounted(() => {
 
 <template>
   <section>
-    <PageHeader title="Listado de productos" />
+    <div class="flex flex-wrap gap-1 justify-between items-center">
+      <PageHeader title="Listado de productos" />
+      <UButton
+        @click="handleNewProduct"
+        :ui="btnUI"
+        icon="i-heroicons-plus"
+        size="md"
+        color="primary"
+        class="mb-5"
+        variant="solid"
+        label="Nuevo"
+      />
+    </div>
 
     <template v-if="prods.length">
       <div class="products-container">
