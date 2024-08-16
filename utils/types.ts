@@ -22,6 +22,7 @@ export interface Product {
   description: string,
   image?: string,
   imageUrl?: string,
-  // price: number,
-  // category: string,
+  price: number,
+  category: string,
+  available: boolean,
 }

@@ -30,7 +30,9 @@ const getPriceInteger = (price) => {
 const getPriceDecimal = (price) => {
   const str = price.toString()
   const [integer, decimal] = str.split('.')
-  return decimal.length > 1 ? decimal : `${decimal}0`
+  return decimal 
+    ? decimal.length > 1 ? decimal : `${decimal}0`
+    : '00'
 }
 
 const handleAddProductToCart = (target) => {

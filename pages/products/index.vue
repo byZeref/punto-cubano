@@ -17,13 +17,11 @@ const btnUI = {
 const prods = ref([])
 const loadProducts = async () => {
   const { data } = await $fetch('/api/product/all', { method: 'get'})
-  console.log('data', data.products)
   prods.value = data.products
 }
 
 const showProductModal = ref(false)
 const handleNewProduct = () => {
-  console.log('create new product')
   showProductModal.value = true
 }
 
@@ -36,7 +34,8 @@ onMounted(() => {
   <ProductModal
     v-if="showProductModal"
     :show="showProductModal" 
-    @update:show="(val) => showProductModal = val" 
+    @update:show="(val) => showProductModal = val"
+    @refresh="loadProducts"
   />
 
   <section>

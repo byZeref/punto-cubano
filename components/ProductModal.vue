@@ -1,7 +1,7 @@
 <script setup>
 import { PRODUCT_CATEGORIES } from '~/utils/constants'
 
-const emit = defineEmits(['update:show'])
+const emit = defineEmits(['update:show', 'refresh'])
 const props = defineProps({
   show: {
     type: Boolean,
@@ -29,7 +29,6 @@ const state = reactive({
 
 const imagePreview = ref('')
 const handleFileChange = (fileList) => {
-  console.log('handleFileChange', fileList)
   state.image =fileList[0]
   const reader = new FileReader()
   reader.onload = (e) => {
@@ -52,20 +51,44 @@ async function onError (event) {
 }
 
 const submit = async () => {
-  console.log('submit', state)
+  const formData = new FormData()
+  formData.append('name', state.name)
+  formData.append('description', state.description)
+  formData.append('price', state.price)
+  formData.append('category', state.category)
+  formData.append('available', state.available)
+  state.image && formData.append('image', state.image)
+  props.entity && formData.append('id', props.entity.id)
 
-  // const formData = new FormData()
-  // formData.append('name', state.name)
-  // formData.append('description', state.description)
-  // formData.append('image', state.image)
-  // formData.append('price', state.price)
-  // formData.append('category', state.category)
-  // formData.append('available', state.available)
+  let res
+  if (props.entity) {
+    res = await editProduct(formData)
+  } else {
+    res = await createProduct(formData)
+  }
+  const { data, status } = res
+  console.log(status, data)
 
-  // const data = await $fetch('/api/product/create', {
-  //   method: 'post',
-  //   body: formData
-  // })
+  const success = (!props.entity && status === 201) || (props.entity && status === 204)
+  if (success) {
+    visible.value = false
+    emit('refresh')
+  }
+}
+
+const createProduct = async (formData) => {
+  const { data, status } = await $fetch('/api/product/create', {
+    method: 'post',
+    body: formData
+  })
+  return { data, status }
+}
+const editProduct = async (formData) => {
+  const { data, status } = await $fetch('/api/product/edit', {
+    method: 'put',
+    body: formData
+  })
+  return { data, status }
 }
 </script>
 
@@ -101,6 +124,7 @@ const submit = async () => {
         <UFormGroup label="Imagen" name="image">
           <UInput
             type="file"
+            accept="image/*"
             size="lg"
             icon="i-heroicons-folder"
             :color="entity ? 'sky' : 'emerald'"
