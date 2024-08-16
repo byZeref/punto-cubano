@@ -21,8 +21,10 @@ const loadProducts = async () => {
   prods.value = data.products
 }
 
+const showProductModal = ref(false)
 const handleNewProduct = () => {
   console.log('create new product')
+  showProductModal.value = true
 }
 
 onMounted(() => {
@@ -31,6 +33,12 @@ onMounted(() => {
 </script>
 
 <template>
+  <ProductModal
+    v-if="showProductModal"
+    :show="showProductModal" 
+    @update:show="(val) => showProductModal = val" 
+  />
+
   <section>
     <div class="flex flex-wrap gap-1 justify-between items-center">
       <PageHeader title="Listado de productos" />
@@ -51,7 +59,7 @@ onMounted(() => {
         <ProductCard
           v-for="(product) in prods" 
           :key="product.id" 
-          :data="product" 
+          :product="product" 
           :is-dark-mode="isDarkMode" 
           :is-logged="isLogged"
         />

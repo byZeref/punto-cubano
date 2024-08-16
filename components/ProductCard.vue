@@ -2,13 +2,15 @@
 import IconShoppingCartAdd from '~/components/icons/IconShoppingCartAdd.vue'
 
 const props = defineProps({
-  data: {
+  product: {
     type: Object,
     required: true,
   },
   isDarkMode: Boolean,
   isLogged: Boolean,
 })
+const showProductModal = ref(false)
+const showRemoveConfirm = ref(false)
 
 const cardUI = {
   body: {
@@ -31,47 +33,56 @@ const getPriceDecimal = (price) => {
   return decimal.length > 1 ? decimal : `${decimal}0`
 }
 
-const handleAddProductToCart = (id) => {
-  console.log('add product to cart', id)
+const handleAddProductToCart = (target) => {
+  console.log('add product to cart', target)
 }
-const handleEditProduct = (id) => {
-  console.log('edit product', id)
+const handleEditProduct = (target) => {
+  console.log('edit product', target)
+  showProductModal.value = true
 }
-const handleRemoveProduct = (id) => {
-  console.log('remove product', id)
+const handleRemoveProduct = (target) => {
+  console.log('remove product', target)
+  showRemoveConfirm.value = true
 }
 
 </script>
 
 <template>
+  <ProductModal
+    v-if="showProductModal"
+    :show="showProductModal" 
+    :entity="product"
+    @update:show="(val) => showProductModal = val" 
+  />
+
   <UCard :ui="cardUI">
     <div class="flex h-28 lg:h-32">
       <div class="h-full w-[120px] lg:w-[140px] flex-shrink-0">
-        <img class="h-full w-auto object-cover" :src="data.imageUrl" alt="Product image">
+        <img class="h-full w-auto object-cover" :src="product.imageUrl" alt="Product image">
       </div>
       <div class="w-full flex flex-col px-4 lg:px-4 py-1 lg:py-2 lg:gap-[2px] relative">
-        <span class="font-medium text-slate-900 dark:text-white">{{ data.name }}</span>
-        <UTooltip :text="data.description" :popper="{ placement: 'top' }" :ui="tooltipUI">
-          <span class="text-xs line-clamp-1 cursor-help">{{ data.description }}</span>
+        <span class="font-medium text-slate-900 dark:text-white">{{ product.name }}</span>
+        <UTooltip :text="product.description" :popper="{ placement: 'top' }" :ui="tooltipUI">
+          <span class="text-xs line-clamp-1 cursor-help">{{ product.description }}</span>
         </UTooltip>
-        <AvailabilityBadge :available="data.available" />
+        <AvailabilityBadge :available="product.available" />
         <div class="mt-auto flex items-center justify-between">
           <span class="text-[var(--primary-color)] tracking-tight">
             <span class="text-base lg:text-lg">$</span>
-            <span class="font-medium text-2xl lg:text-3xl tracking-tighter">{{ getPriceInteger(data.price) }}</span><span class="font-medium text-base lg:text-lg">.{{ getPriceDecimal(data.price) }}</span>
+            <span class="font-medium text-2xl lg:text-3xl tracking-tighter">{{ getPriceInteger(product.price) }}</span><span class="font-medium text-base lg:text-lg">.{{ getPriceDecimal(product.price) }}</span>
           </span>
           <div class="flex gap-1 absolute right-2 bottom-2">
             <!-- TODO v-if="isLogged" -->
             <div
               class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
-              @click="handleAddProductToCart(data.id)"
+              @click="handleAddProductToCart(product)"
             >
               <IconShoppingCartAdd :color="isDarkMode ? '#fff' : 'black'" />
             </div>
             <!-- TODO v-else -->
             <div class="flex gap-1">
               <UButton
-                @click="handleEditProduct(data.id)"
+                @click="handleEditProduct(product)"
                 :ui="{ rounded: 'rounded-full' }"
                 icon="i-heroicons-pencil-square"
                 size="sm"
@@ -80,7 +91,7 @@ const handleRemoveProduct = (id) => {
                 variant="solid"
               />
               <UButton
-                @click="handleRemoveProduct(data.id)"
+                @click="handleRemoveProduct(product)"
                 :ui="{ rounded: 'rounded-full' }"
                 icon="i-heroicons-trash"
                 size="sm"
