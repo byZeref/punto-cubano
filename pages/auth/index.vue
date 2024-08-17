@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { error_types } from '@/utils/constants'
+import IconSpinner from '~/components/icons/IconSpinner.vue'
 definePageMeta({
   layout: "auth",
   middleware: 'auth',
 })
 
-const { AUTH_API_ERROR } = error_types
 const authStore = useAuthStore()
 const router = useRouter()
 const passwordType = ref('password')
@@ -20,7 +19,7 @@ const login = async () => {
   const payload = { ...form.value }
   loading.value = true
   const { data, error: e } = await authStore.login(payload)
-    .finally(() => { loading.value = false })
+
   if (e) {
     console.error('error on login', e)
     error.value = handleError(e)!
@@ -92,8 +91,17 @@ const btnUI = {
               />
             </template>
           </UInput>
-          <UButton type="submit" color="primary" size="xl" block :ui="btnUI" :disabled="loading">
-            <span class="text-center">Iniciar Sesión</span>
+          <UButton
+            type="submit"
+            color="primary"
+            size="xl"
+            block
+            :ui="btnUI"
+            :disabled="loading"
+            class="min-h-[44px]"
+          >
+            <IconSpinner v-if="loading" color="#fff" class="text-center mx-auto" />
+            <span v-else class="text-center">Iniciar Sesión</span>
           </UButton>
         </div>
       </form>
