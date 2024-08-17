@@ -1,6 +1,7 @@
 <script setup>
 import IconShoppingCartAdd from '~/components/icons/IconShoppingCartAdd.vue'
 
+defineEmits(['refresh'])
 const props = defineProps({
   product: {
     type: Object,
@@ -52,9 +53,10 @@ const handleRemoveProduct = (target) => {
 <template>
   <ProductModal
     v-if="showProductModal"
-    :show="showProductModal" 
+    :show="showProductModal"
     :entity="product"
-    @update:show="(val) => showProductModal = val" 
+    @update:show="(val) => showProductModal = val"
+    @refresh="$emit('refresh')"
   />
 
   <UCard :ui="cardUI">

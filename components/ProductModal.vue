@@ -1,4 +1,5 @@
 <script setup>
+import IconSpinner from '~/components/icons/IconSpinner.vue'
 import { PRODUCT_CATEGORIES } from '~/utils/constants'
 
 const emit = defineEmits(['update:show', 'refresh'])
@@ -17,7 +18,7 @@ const visible = ref(props.show)
 watchEffect(() => {
   if (!visible.value) emit('update:show', false)
 })
-
+const loading = ref(false)
 const state = reactive({
   name: props.entity?.name ?? '',
   description: props.entity?.description ?? '',
@@ -29,7 +30,7 @@ const state = reactive({
 
 const imagePreview = ref('')
 const handleFileChange = (fileList) => {
-  state.image =fileList[0]
+  state.image = fileList[0]
   const reader = new FileReader()
   reader.onload = (e) => {
     imagePreview.value = e.target.result
@@ -57,19 +58,26 @@ const submit = async () => {
   formData.append('price', state.price)
   formData.append('category', state.category)
   formData.append('available', state.available)
-  state.image && formData.append('image', state.image)
-  props.entity && formData.append('id', props.entity.id)
+
+  const imageIsFile = state.image instanceof File
+  imageIsFile && formData.append('image', state.image)
 
   let res
-  if (props.entity) {
+  loading.value = true
+  if (props.entity) { // <--- edit product
+    formData.append('id', props.entity.id)
+    if (imageIsFile) formData.append('oldImageName', props.entity.image)
     res = await editProduct(formData)
-  } else {
+      .finally(() => { loading.value = false })
+  } else { // <--- create product
     res = await createProduct(formData)
+      .finally(() => { loading.value = false })
   }
   const { data, status } = res
   console.log(status, data)
 
   const success = (!props.entity && status === 201) || (props.entity && status === 204)
+  console.log('success', success)
   if (success) {
     visible.value = false
     emit('refresh')
@@ -90,6 +98,12 @@ const editProduct = async (formData) => {
   })
   return { data, status }
 }
+
+onMounted(() => {
+  if (props.entity) {
+    imagePreview.value = props.entity.imageUrl
+  }
+})
 </script>
 
 <template>
@@ -105,7 +119,8 @@ const editProduct = async (formData) => {
           <UInput
             v-model="state.name"
             size="lg"
-            :color="entity ? 'sky' : 'emerald'" 
+            :color="entity ? 'sky' : 'emerald'"
+            :disabled="loading"
           />
         </UFormGroup>
 
@@ -118,6 +133,7 @@ const editProduct = async (formData) => {
           :maxrows="3" 
           autoresize
           resize
+          :disabled="loading"
           />
         </UFormGroup>
         
@@ -129,6 +145,7 @@ const editProduct = async (formData) => {
             icon="i-heroicons-folder"
             :color="entity ? 'sky' : 'emerald'"
             @change="handleFileChange"
+            :disabled="loading"
           />
           <img
             v-if="imagePreview"
@@ -143,6 +160,7 @@ const editProduct = async (formData) => {
               v-model="state.price"
               size="lg"
               :color="entity ? 'sky' : 'emerald'"
+              :disabled="loading"
             />
           </UFormGroup>
           <UFormGroup label="Categoría" name="category" class="w-full">
@@ -151,17 +169,25 @@ const editProduct = async (formData) => {
               size="lg"
               :color="entity ? 'sky' : 'emerald'"
               :options="PRODUCT_CATEGORIES"
+              :disabled="loading"
             />
           </UFormGroup>
         </div>
 
         <div class="flex items-end">
           <UFormGroup label="Disponible" name="available">
-            <UToggle v-model="state.available" size="lg" :color="entity ? 'sky' : 'emerald'" />
+            <UToggle
+              v-model="state.available"
+              size="lg"
+              :color="entity ? 'sky' : 'emerald'" 
+              :disabled="loading"
+            />
           </UFormGroup>
           <span 
             class="mb-[5px] text-sm text-slate-500 -ml-3 cursor-pointer user-select-none"
-            @click="state.available = !state.available"
+            @click="() => {
+              if (!loading) state.available = !state.available
+            }"
           >
             Indique si el producto está disponible
           </span>
@@ -171,11 +197,25 @@ const editProduct = async (formData) => {
     </template>
     <template #footer>
       <div class="flex gap-2">
-        <UButton class="ml-auto" :color="entity ? 'sky' : 'emerald'" variant="outline" size="lg" @click="visible = false">
+        <UButton
+          class="ml-auto"
+          :color="entity ? 'sky' : 'emerald'" 
+          variant="outline" 
+          size="lg" 
+          @click="visible = false"
+          :disabled="loading"
+        >
           <span class="text-center">Cancelar</span>
         </UButton>
-        <UButton @click="submit" :color="entity ? 'sky' : 'emerald'" size="lg">
-          <span class="text-center">Guardar</span>
+        <UButton
+          @click="submit"
+          :color="entity ? 'sky' : 'emerald'" 
+          size="lg"
+          class="min-w-[90px] flex"
+          :disabled="loading"
+          >
+          <IconSpinner v-if="loading" color="#fff" class="text-center mx-auto" />
+          <span v-else class="text-center mx-auto">Guardar</span>
         </UButton>
       </div>
     </template>

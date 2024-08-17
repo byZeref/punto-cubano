@@ -35,4 +35,5 @@ export interface ProductPayload {
   price: number,
   category: string,
   available: boolean,
+  oldImageName?: string,
 }

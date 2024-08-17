@@ -61,6 +61,7 @@ onMounted(() => {
           :product="product" 
           :is-dark-mode="isDarkMode" 
           :is-logged="isLogged"
+          @refresh="loadProducts"
         />
       </div>
     </template>
