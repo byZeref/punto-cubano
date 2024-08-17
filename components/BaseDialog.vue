@@ -8,7 +8,8 @@ const props = defineProps({
   ui: {
     type: Object,
     required: false,
-  }
+  },
+  preventClose: Boolean,
 })
 const visible = ref(props.show)
 
@@ -19,7 +20,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <UModal v-model="visible" :ui="ui">
+  <UModal v-model="visible" :prevent-close="preventClose" :ui="ui">
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
         <slot name="header" />

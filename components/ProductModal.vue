@@ -11,7 +11,8 @@ const props = defineProps({
   entity: {
     type: Object,
     required: false,
-  }
+  },
+  isDarkMode: Boolean,
 })
 const modalUI = { width: 'w-full sm:max-w-2xl' }
 const visible = ref(props.show)
@@ -184,7 +185,7 @@ onMounted(() => {
             />
           </UFormGroup>
           <span 
-            class="mb-[5px] text-sm text-slate-500 -ml-3 cursor-pointer user-select-none"
+            class="mb-[5px] text-sm text-slate-500 dark:text-slate-400 -ml-3 cursor-pointer user-select-none"
             @click="() => {
               if (!loading) state.available = !state.available
             }"
@@ -214,7 +215,7 @@ onMounted(() => {
           class="min-w-[90px] flex"
           :disabled="loading"
           >
-          <IconSpinner v-if="loading" color="#fff" class="text-center mx-auto" />
+          <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
           <span v-else class="text-center mx-auto">Guardar</span>
         </UButton>
       </div>

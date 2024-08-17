@@ -33,7 +33,8 @@ onMounted(() => {
 <template>
   <ProductModal
     v-if="showProductModal"
-    :show="showProductModal" 
+    :show="showProductModal"
+    :is-dark-mode="isDarkMode"
     @update:show="(val) => showProductModal = val"
     @refresh="loadProducts"
   />

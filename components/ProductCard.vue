@@ -12,7 +12,6 @@ const props = defineProps({
 })
 const showProductModal = ref(false)
 const showRemoveConfirm = ref(false)
-
 const cardUI = {
   body: {
     padding: 'p-0 sm:p-0',
@@ -39,12 +38,10 @@ const getPriceDecimal = (price) => {
 const handleAddProductToCart = (target) => {
   console.log('add product to cart', target)
 }
-const handleEditProduct = (target) => {
-  console.log('edit product', target)
+const handleEditProduct = () => {
   showProductModal.value = true
 }
-const handleRemoveProduct = (target) => {
-  console.log('remove product', target)
+const handleRemoveProduct = () => {
   showRemoveConfirm.value = true
 }
 
@@ -55,7 +52,16 @@ const handleRemoveProduct = (target) => {
     v-if="showProductModal"
     :show="showProductModal"
     :entity="product"
+    :is-dark-mode="isDarkMode"
     @update:show="(val) => showProductModal = val"
+    @refresh="$emit('refresh')"
+  />
+  <ProductRemoveDialog
+    v-if="showRemoveConfirm"
+    :show="showRemoveConfirm"
+    :entity="product"
+    :is-dark-mode="isDarkMode"
+    @update:show="(val) => showRemoveConfirm = val"
     @refresh="$emit('refresh')"
   />
 
