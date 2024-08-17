@@ -26,3 +26,13 @@ export interface Product {
   category: string,
   available: boolean,
 }
+
+export interface ProductPayload {
+  id?: string,
+  name: string,
+  description: string,
+  image?: Blob,
+  price: number,
+  category: string,
+  available: boolean,
+}

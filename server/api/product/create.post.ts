@@ -1,14 +1,5 @@
-import { useSupabase } from "~/server/utils/supabase";
-import type { Product } from "~/utils/types";
-
-type Payload = {
-  name: string,
-  description: string,
-  image?: BlobPart,
-  price: number,
-  category: string,
-  available: boolean,
-}
+import { useSupabase } from "~/server/utils/supabase"
+import type { Product, ProductPayload } from "~/utils/types"
 
 export default defineEventHandler(async (event) => {
   const { supabase } = await useSupabase(event)
@@ -18,7 +9,7 @@ export default defineEventHandler(async (event) => {
   
   let fileName
   
-  const payload: Payload = {
+  const payload: ProductPayload = {
     name: form!.find(item => item.name === 'name')!.data.toString(),
     description: form!.find(item => item.name === 'description')!.data.toString(),
     price: parseFloat(form!.find(item => item.name === 'price')!.data.toString()),
