@@ -108,7 +108,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseDialog v-if="visible" :show="visible" @update:show="(val) => visible = val" :ui="modalUI">
+  <BaseDialog
+    v-if="visible"
+    :show="visible"
+    :prevent-close="loading"
+    @update:show="(val) => visible = val" :ui="modalUI"
+  >
     <template #header>
       <h4 class="text-slate-900 dark:text-slate-300 font-medium text-xl">
         {{ entity ? 'Editar producto' : 'Nuevo producto' }}
