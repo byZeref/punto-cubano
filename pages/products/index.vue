@@ -54,19 +54,25 @@ onMounted(() => {
       />
     </div>
 
-    <template v-if="prods.length">
-      <div class="products-container">
-        <ProductCard
-          v-for="(product) in prods" 
-          :key="product.id" 
-          :product="product" 
-          :is-dark-mode="isDarkMode" 
-          :is-logged="isLogged"
-          @refresh="loadProducts"
-        />
-      </div>
-    </template>
-
+    <div v-if="prods.length" class="products-container">
+      <ProductCard
+        v-for="(product) in prods" 
+        :key="product.id" 
+        :product="product" 
+        :is-dark-mode="isDarkMode" 
+        :is-logged="isLogged"
+        @refresh="loadProducts"
+      />
+    </div>
+    <UAlert
+      v-else
+      icon="i-heroicons-exclamation-triangle"
+      color="red"
+      variant="soft"
+      title="Ups!"
+      description="No se han encontrado productos. Agregue uno nuevo para verlo aquí."
+      :actions="[{ color: 'red', variant: 'outline', label: 'Agregar un nuevo producto', click: () => handleNewProduct() }]"
+    />
   </section>
 </template>
 
