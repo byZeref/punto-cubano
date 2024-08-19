@@ -1,6 +1,8 @@
 <script setup>
 import IconSpinner from '~/components/icons/IconSpinner.vue'
 
+const { ERR_INTERNET_CONNECTION } = errorMessages
+const { NOTIFICATION_ERROR, NOTIFICATION_SUCCESS } = notificationTypes
 const emit = defineEmits(['update:show', 'refresh'])
 const props = defineProps({
   show: {
@@ -21,14 +23,30 @@ watchEffect(() => {
 
 const remove = async () => {
   loading.value = true
-  const { status } = await $fetch('/api/product/remove', { 
-    method: 'delete', 
-    body: { product: props.entity }
+  const { data, status } = await useFetch('/api/product/remove', {
+    method: 'DELETE',
+    body: { product: props.entity },
+    onRequestError({ request, response, options }) {
+      notify(ERR_INTERNET_CONNECTION, NOTIFICATION_ERROR)
+    },
+    onResponseError({ request, response, options }) {
+      console.log('response error', response)
+      notify(response._data.message, NOTIFICATION_ERROR)
+    },
+    onResponse({ request, response, options }) {
+      console.log('response', response)
+      const { status, message } = response._data
+      if (status !== 204) {
+        notify(message, NOTIFICATION_ERROR)
+      }
+    }
   }).finally(() => { loading.value = false })
   
-  if (status === 204) {
+  const success = status.value === 'success'
+  if (success) {
     visible.value = false
     emit('refresh')
+    notify('Producto eliminado exitosamente', NOTIFICATION_SUCCESS)
   }
 }
 </script>
@@ -41,7 +59,7 @@ const remove = async () => {
     :prevent-close="loading"
   >
     <template #header>
-      <h4 class="text-[var(--error-color)] font-semibold text-xl">Confirmación</h4>
+      <h4 class="text-[var(--error-color)] font-medium text-lg">Confirmación</h4>
     </template>
     <template #body>
       <span class="text-slate-700 dark:text-slate-200">Seguro que desea eliminar el producto <strong>{{ entity.name }}</strong>?</span>

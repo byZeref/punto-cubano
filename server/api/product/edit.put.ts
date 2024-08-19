@@ -5,11 +5,7 @@ export default defineEventHandler(async (event) => {
   const { supabase } = await useSupabase(event)
   const form = await readMultipartFormData(event)
   const hasImage = form!.some(item => item.name === 'image')
-  console.log('image', hasImage)
-  // return
-  
   let fileName
-  
   const payload: ProductPayload = {
     id: form!.find(item => item.name === 'id')!.data.toString(),
     name: form!.find(item => item.name === 'name')!.data.toString(),
@@ -18,7 +14,6 @@ export default defineEventHandler(async (event) => {
     category: form!.find(item => item.name === 'category')!.data.toString(),
     available: form!.find(item => item.name === 'available')!.data.toString() === 'true',
   }
-  
   const product: Product = {
     name: payload.name,
     description: payload.description,
@@ -33,11 +28,9 @@ export default defineEventHandler(async (event) => {
     payload.image = new Blob([file!.data], { type: file!.type })
     const fileExt = payload.image?.type.substring(6)
     fileName = `${payload.name.toLowerCase().replaceAll(' ', '-')}.${fileExt}`
+    fileName = fileName.replaceAll('ñ', 'n')
     product.image = fileName
   }
-  console.info('payload', payload)
-  console.info('product', product)
-  // return
 
   // eslint-disable-next-line
   let { status, error: updateError } = await supabase
@@ -52,7 +45,6 @@ export default defineEventHandler(async (event) => {
       message: updateError.message,
     })
   }
-  console.log('status update', status)
 
   let message
   if (status === 204 && hasImage) {

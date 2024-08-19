@@ -5,17 +5,22 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { product } = body
 
-  const { status, error: removeError } = await supabase
+  // eslint-disable-next-line
+  let { status, error: removeError } = await supabase
     .from('products')
     .delete()
     .eq('id', product.id)
 
   if (removeError) {
     console.error('error on remove product', removeError)
-    // TODO handle error (return and don't remove the image)
+    throw createError({
+      statusCode: status,
+      message: removeError.message,
+    })
   }
   console.log('status remove', status)
 
+  let message
   if (status === 204) {
     const { error: removeImageError } = await supabase.storage
       .from('products')
@@ -23,13 +28,13 @@ export default defineEventHandler(async (event) => {
     
     if (removeImageError) {
       console.error('error on remove image', removeImageError)
-      // TODO handle error
+      status = removeImageError.statusCode
+      message = 'No se pudo eliminar la imagen. Por favor, inténtelo de nuevo.'
     }
-
   }
 
-
   return {
-    status: status,
+    status,
+    message,
   }
 })
