@@ -1,11 +1,13 @@
 <script setup>
-const toast = useToast()
+const { ERR_INTERNET_CONNECTION } = errorMessages
+const { NOTIFICATION_ERROR } = notificationTypes
+
 const { data: products, error, refresh } = await useFetch('/api/product/all', {
   onRequestError({ request, response, options }) {
-    notify('Por favor verifique su conexión a internet', 'error')
+    notify(ERR_INTERNET_CONNECTION, NOTIFICATION_ERROR)
   },
   onResponseError({ request, response, options }) {
-    notify(response._data.message, 'error')
+    notify(response._data.message, NOTIFICATION_ERROR)
   },
 })
 console.log('products', products)

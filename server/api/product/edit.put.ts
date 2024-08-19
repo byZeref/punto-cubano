@@ -39,17 +39,22 @@ export default defineEventHandler(async (event) => {
   console.info('product', product)
   // return
 
-  const { status, error: updateError } = await supabase
+  // eslint-disable-next-line
+  let { status, error: updateError } = await supabase
     .from('products')
     .update(product)
     .eq('id', payload.id)
 
   if (updateError) {
     console.error('error on update product', updateError)
-    // TODO handle error (return and don't upload the image)
+    throw createError({
+      statusCode: status,
+      message: updateError.message,
+    })
   }
   console.log('status update', status)
 
+  let message
   if (status === 204 && hasImage) {
     const { error: removeImageError } = await supabase.storage
       .from('products')
@@ -57,24 +62,27 @@ export default defineEventHandler(async (event) => {
     
     if (removeImageError) {
       console.error('error on remove image', removeImageError)
-      // TODO handle error (return and don't upload the image)
+      status = removeImageError.statusCode
+      message = 'No se pudo eliminar la imagen anterior. Por favor, inténtelo de nuevo.'
+      return { status, message }
     }
+
     const { data, error: uploadImageError } = await supabase.storage
       .from('products')
       .upload(fileName, payload.image)
 
     if (uploadImageError) {
       console.error('error on upload image', uploadImageError)
-      // TODO handle error
+      status = uploadImageError.statusCode
+      message = 'No se pudo subir la imagen. Por favor, inténtelo de nuevo.'
     }
 
   }
 
 
   return {
-    data: {
-      product,
-    },
-    status: status,
+    product,
+    status,
+    message,
   }
 })

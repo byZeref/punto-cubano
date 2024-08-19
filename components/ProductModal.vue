@@ -1,7 +1,8 @@
 <script setup>
 import IconSpinner from '~/components/icons/IconSpinner.vue'
-import { PRODUCT_CATEGORIES } from '~/utils/constants'
 
+const { ERR_INTERNET_CONNECTION } = errorMessages
+const { NOTIFICATION_ERROR, NOTIFICATION_SUCCESS } = notificationTypes
 const emit = defineEmits(['update:show', 'refresh'])
 const props = defineProps({
   show: {
@@ -77,25 +78,51 @@ const submit = async () => {
   const { data, status } = res
   console.log(status, data)
 
-  const success = (!props.entity && status === 201) || (props.entity && status === 204)
+  const success = status.value === 'success'
   console.log('success', success)
   if (success) {
     visible.value = false
     emit('refresh')
+    const msg = props.entity ? 'Producto actualizado exitosamente' : 'Producto creado exitosamente'
+    notify(msg, NOTIFICATION_SUCCESS)
   }
 }
 
 const createProduct = async (formData) => {
-  const { data, status } = await $fetch('/api/product/create', {
-    method: 'post',
-    body: formData
+  const { data, status } = await useFetch('/api/product/create', {
+    method: 'POST',
+    body: formData,
+    onRequestError({ request, response, options }) {
+      notify(ERR_INTERNET_CONNECTION, NOTIFICATION_ERROR)
+    },
+    onResponseError({ request, response, options }) {
+      notify(response._data.message, NOTIFICATION_ERROR)
+    },
+    onResponse({ request, response, options }) {
+      const { status, message } = response._data
+      if (status !== 201) {
+        notify(message, NOTIFICATION_ERROR)
+      }
+    }
   })
   return { data, status }
 }
 const editProduct = async (formData) => {
-  const { data, status } = await $fetch('/api/product/edit', {
-    method: 'put',
-    body: formData
+  const { data, status } = await useFetch('/api/product/edit', {
+    method: 'PUT',
+    body: formData,
+    onRequestError({ request, response, options }) {
+      notify(ERR_INTERNET_CONNECTION, NOTIFICATION_ERROR)
+    },
+    onResponseError({ request, response, options }) {
+      notify(response._data.message, NOTIFICATION_ERROR)
+    },
+    onResponse({ request, response, options }) {
+      const { status, message } = response._data
+      if (status !== 204) {
+        notify(message, NOTIFICATION_ERROR)
+      }
+    }
   })
   return { data, status }
 }

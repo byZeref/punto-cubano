@@ -34,16 +34,21 @@ export default defineEventHandler(async (event) => {
     
   console.info('product', product)
 
-  const { status, error: insertError } = await supabase
+  // eslint-disable-next-line
+  let { status, error: insertError } = await supabase
     .from('products')
     .insert(product)
 
   if (insertError) {
     console.error('error on create product', insertError)
-    // TODO handle error (return and don't upload the image)
+    throw createError({
+      statusCode: status,
+      message: insertError.message,
+    })
   }
   console.log('status create', status)
 
+  let message
   if (status === 201 && hasImage) {
     const { data, error: uploadError } = await supabase.storage
       .from('products')
@@ -51,16 +56,15 @@ export default defineEventHandler(async (event) => {
 
     if (uploadError) {
       console.error('error on upload image', uploadError)
-      // TODO handle error
+      status = uploadError.statusCode
+      message = 'No se pudo subir la imagen. Por favor, inténtelo de nuevo.'
     }
-
   }
 
 
   return {
-    data: {
-      product,
-    },
-    status: status,
-  };
-});
+    product,
+    status,
+    message,
+  }
+})
