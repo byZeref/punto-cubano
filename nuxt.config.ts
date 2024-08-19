@@ -31,22 +31,15 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Punto Cubano' },
         { property: 'og:description', content: 'Tienda de productos cubanos' },
         // TODO no funciona la imagen :(
-        { property: 'og:image', content: 'logo.jpg' },
+        { property: 'og:image', content: 'logo.png' },
       ],
       link: [
-        { rel: 'icon', href: 'logo.jpg' }
+        { rel: 'icon', href: 'logo-white.png' }
       ]
     },
   },
-  ssr: false,
+  // ssr: false,
   // routeRules: {
   //   '/admin': { ssr: false }
   // }
-
-  // runtimeConfig: {
-  //   turso: {
-  //     databaseUrl: process.env.NUXT_DATABASE_URL,
-  //     databaseToken: process.env.NUXT_DATABASE_TOKEN,
-  //   },
-  // },
 })

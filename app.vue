@@ -18,4 +18,6 @@ provide('error', error)
       <NuxtLoadingIndicator color="#7f2c30" />
       <NuxtPage />
   </NuxtLayout>
+  
+  <UNotifications />
 </template>

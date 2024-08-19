@@ -1,13 +1,21 @@
 // @ts-expect-error --> Supabase is not a module, nuxt said
 import { serverSupabaseClient } from '#supabase/server'
-import type { Product } from "~/utils/types";
-
+import type { Product } from "~/utils/types"
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
-  const { data: products } = await client.from('products').select()
-  console.log(products);
+  const { data: products, error, status } = await client.from('products').select()
+  console.log(products)
+  console.log(error)
+  console.log(status)
+
+  if (error) {
+    throw createError({
+      statusCode: status,
+      message: error.message,
+    })
+  }
 
   products.forEach((prod: Product) => {
     if (!prod.image) return
@@ -16,21 +24,6 @@ export default defineEventHandler(async (event) => {
   })
   
 
-  return {
-    data: {
-      products,
-    },
-  };
-});
-
-
-// export default defineEventHandler(async (event) => {
-//   const client = useTurso(/* event */);
-//   const { rows } = await client.execute("select * from users");
-
-//   return {
-//     data: {
-//       items: rows,
-//     },
-//   };
-// });
+  return products
+  
+})

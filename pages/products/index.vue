@@ -1,6 +1,15 @@
 <script setup>
-// TODO load all products (para esto debe estar ssr=true)
-// const { data: products } = await useFetch('/api/product/all', 'get')
+const toast = useToast()
+const { data: products, error, refresh } = await useFetch('/api/product/all', {
+  onRequestError({ request, response, options }) {
+    notify('Por favor verifique su conexión a internet', 'error')
+  },
+  onResponseError({ request, response, options }) {
+    notify(response._data.message, 'error')
+  },
+})
+console.log('products', products)
+console.log('error', error)
 
 const isDarkMode = useCookie('dark')
 const authStore = useAuthStore()
@@ -14,20 +23,11 @@ const btnUI = {
   }
 }
 
-const prods = ref([])
-const loadProducts = async () => {
-  const { data } = await $fetch('/api/product/all', { method: 'get'})
-  prods.value = data.products
-}
-
 const showProductModal = ref(false)
 const handleNewProduct = () => {
   showProductModal.value = true
 }
 
-onMounted(() => {
-  loadProducts()
-})
 </script>
 
 <template>
@@ -36,7 +36,7 @@ onMounted(() => {
     :show="showProductModal"
     :is-dark-mode="isDarkMode"
     @update:show="(val) => showProductModal = val"
-    @refresh="loadProducts"
+    @refresh="refresh"
   />
 
   <section>
@@ -54,14 +54,14 @@ onMounted(() => {
       />
     </div>
 
-    <div v-if="prods.length" class="products-container">
+    <div v-if="products?.length" class="products-container">
       <ProductCard
-        v-for="(product) in prods" 
+        v-for="(product) in products" 
         :key="product.id" 
         :product="product" 
         :is-dark-mode="isDarkMode" 
         :is-logged="isLogged"
-        @refresh="loadProducts"
+        @refresh="refresh"
       />
     </div>
     <UAlert
