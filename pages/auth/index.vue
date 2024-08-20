@@ -19,6 +19,7 @@ const login = async () => {
   const payload = { ...form.value }
   loading.value = true
   const { data, error: e } = await authStore.login(payload)
+    .finally(() => { loading.value = false })
 
   if (e) {
     console.error('error on login', e)

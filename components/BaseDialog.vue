@@ -17,6 +17,7 @@ const props = defineProps({
   preventClose: Boolean,
 })
 const visible = ref(props.show)
+const baseUI = { ...props.ui, ...{ padding: 'p-0' } }
 
 watchEffect(() => {
    if (!visible.value) emit('update:show', false)
@@ -25,8 +26,8 @@ watchEffect(() => {
 </script>
 
 <template>
-  <UModal v-model="visible" :prevent-close="preventClose" :ui="ui">
-    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+  <UModal v-model="visible" :prevent-close="preventClose" :ui="baseUI">
+    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800', rounded: '' }">
       <template #header>
         <slot name="header" />
       </template>
