@@ -44,6 +44,7 @@ const handleNewProduct = () => {
   <section>
     <div class="flex flex-wrap gap-1 justify-between items-center">
       <PageHeader title="Listado de productos" />
+      <!-- TODO v-if="isLogged" -->
       <UButton
         @click="handleNewProduct"
         :ui="btnUI"

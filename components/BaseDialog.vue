@@ -9,6 +9,11 @@ const props = defineProps({
     type: Object,
     required: false,
   },
+  footer: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
   preventClose: Boolean,
 })
 const visible = ref(props.show)
@@ -28,7 +33,7 @@ watchEffect(() => {
 
       <slot name="body" />
 
-      <template #footer>
+      <template #footer v-if="footer">
         <slot name="footer" />
       </template>
     </UCard>

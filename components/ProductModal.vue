@@ -1,6 +1,7 @@
 <script setup>
 import IconSpinner from '~/components/icons/IconSpinner.vue'
 
+const { PRICE_REGEX } = regex
 const { ERR_INTERNET_CONNECTION } = errorMessages
 const { NOTIFICATION_ERROR, NOTIFICATION_SUCCESS } = notificationTypes
 const emit = defineEmits(['update:show', 'refresh'])
@@ -22,13 +23,14 @@ watchEffect(() => {
 })
 const loading = ref(false)
 const state = reactive({
-  name: props.entity?.name ?? '',
-  description: props.entity?.description ?? '',
+  name: props.entity?.name ?? undefined,
+  description: props.entity?.description ?? undefined,
   image: props.entity?.image ?? null,
-  price: props.entity?.price ?? '',
-  category: props.entity?.category ?? '',
+  price: props.entity?.price ?? undefined,
+  category: props.entity?.category ?? undefined,
   available: props.entity?.available ?? true,
 })
+const color = computed(() => props.entity ? 'sky' : 'emerald')
 
 const imagePreview = ref('')
 const handleFileChange = (fileList) => {
@@ -42,12 +44,16 @@ const handleFileChange = (fileList) => {
 
 const validate = (state) => {
   const errors = []
-  // if (!state.name) errors.push({ path: 'name', message: 'Este campo no puede estar vacío' })
-  // if (!state.description) errors.push({ path: 'description', message: 'Este campo no puede estar vacío' })
+  if (!state.name) errors.push({ path: 'name', message: 'Por favor, introduzca el nombre del producto' })
+  if (!state.description) errors.push({ path: 'description', message: 'Por favor, introduzca una descripción del producto' })
+  if (state.price && !PRICE_REGEX.test(state.price)) errors.push({ path: 'price', message: 'El precio debe ser un número válido' })
+  if (!state.price) errors.push({ path: 'price', message: ' Por favor, introduzca el precio del producto' })
+  if (!state.category) errors.push({ path: 'category', message: 'Por favor, seleccione una categoría' })
+
   return errors
 }
 
-async function onError (event) {
+const onError = async (event) => {
   const element = document.getElementById(event.errors[0].id)
   element?.focus()
   element?.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -139,6 +145,7 @@ onMounted(() => {
     v-if="visible"
     :show="visible"
     :prevent-close="loading"
+    :footer="false"
     @update:show="(val) => visible = val" :ui="modalUI"
   >
     <template #header>
@@ -147,36 +154,91 @@ onMounted(() => {
       </h4>
     </template>
     <template #body>
-      <UForm :validate="validate" :state="state" class="space-y-2" @submit="submit" @error="onError">
-        <UFormGroup label="Nombre" name="name">
-          <UInput
-            v-model="state.name"
-            size="lg"
-            :color="entity ? 'sky' : 'emerald'"
-            :disabled="loading"
-          />
+      <UForm :validate="validate" :state="state" class="space-y-5" @submit="submit" @error="onError">
+        <UFormGroup name="name" class="relative">
+          <template #label>
+            <span>Nombre<span class="text-red-600 dark:text-red-400">*</span></span>
+          </template>
+          <template #default="{ error }">
+            <UInput
+              v-model="state.name"
+              size="lg"
+              :color="color"
+              :disabled="loading"
+              :trailing-icon="error ? 'i-heroicons-exclamation-triangle' : undefined"
+            />
+          </template>
+          <template #error="{ error }">
+            <span class="absolute -bottom-[18px] text-xs">{{ error }}</span>
+          </template>
         </UFormGroup>
 
-        <UFormGroup label="Descripción" name="description">
-          <UTextarea
-          v-model="state.description"
-          size="lg"
-          :color="entity ? 'sky' : 'emerald'"
-          :rows="1" 
-          :maxrows="3" 
-          autoresize
-          resize
-          :disabled="loading"
-          />
+        <UFormGroup name="description" class="relative">
+          <template #label>
+            <span>Descripción<span class="text-red-600 dark:text-red-400">*</span></span>
+          </template>
+          <template #default="{ error }">
+            <UTextarea
+              v-model="state.description"
+              size="lg"
+              :color="color"
+              :rows="1" 
+              :maxrows="3" 
+              autoresize
+              resize
+              :disabled="loading"
+              :trailing-icon="error ? 'i-heroicons-exclamation-triangle' : undefined"
+            />
+          </template>
+          <template #error="{ error }">
+            <span class="absolute -bottom-[18px] text-xs">{{ error }}</span>
+          </template>
+        </UFormGroup>
+
+        <UFormGroup name="price" class="relative">
+          <template #label>
+            <span>Precio<span class="text-red-600 dark:text-red-400">*</span></span>
+          </template>
+          <template #default="{ error }">
+            <UInput
+              v-model="state.price"
+              size="lg"
+              :color="color"
+              :disabled="loading"
+              :trailing-icon="error ? 'i-heroicons-exclamation-triangle' : undefined"
+            />
+          </template>
+          <template #error="{ error }">
+            <span class="absolute -bottom-[18px] text-xs">{{ error }}</span>
+          </template>
         </UFormGroup>
         
-        <UFormGroup label="Imagen" name="image">
+        <UFormGroup name="category" class="relative">
+          <template #label>
+            <span>Categoría<span class="text-red-600 dark:text-red-400">*</span></span>
+          </template>
+          <USelectMenu
+            v-model="state.category"
+            size="lg"
+            :color="color"
+            :options="PRODUCT_CATEGORIES"
+            :disabled="loading"
+          />
+          <template #error="{ error }">
+            <span class="absolute -bottom-[18px] text-xs">{{ error }}</span>
+          </template>
+        </UFormGroup>
+
+        <UFormGroup name="image">
+          <template #label>
+            <span>Imagen</span>
+          </template>
           <UInput
             type="file"
-            accept="image/*"
+            accept="imag dark:text-red-400e/*"
             size="lg"
             icon="i-heroicons-folder"
-            :color="entity ? 'sky' : 'emerald'"
+            :color="color"
             @change="handleFileChange"
             :disabled="loading"
           />
@@ -187,37 +249,20 @@ onMounted(() => {
           >
         </UFormGroup>
 
-        <div class="flex justify-between items-center gap-2">
-          <UFormGroup label="Precio" name="price" class="w-full">
-            <UInput
-              v-model="state.price"
-              size="lg"
-              :color="entity ? 'sky' : 'emerald'"
-              :disabled="loading"
-            />
-          </UFormGroup>
-          <UFormGroup label="Categoría" name="category" class="w-full">
-            <USelect
-              v-model="state.category"
-              size="lg"
-              :color="entity ? 'sky' : 'emerald'"
-              :options="PRODUCT_CATEGORIES"
-              :disabled="loading"
-            />
-          </UFormGroup>
-        </div>
-
         <div class="flex items-end">
-          <UFormGroup label="Disponible" name="available">
+          <UFormGroup name="available">
+            <template #label>
+              <span>Disponible</span>
+            </template>
             <UToggle
               v-model="state.available"
               size="lg"
-              :color="entity ? 'sky' : 'emerald'" 
+              :color="color" 
               :disabled="loading"
             />
           </UFormGroup>
           <span 
-            class="mb-[5px] text-sm text-slate-500 dark:text-slate-400 -ml-3 cursor-pointer user-select-none"
+            class="mb-[6px] text-sm text-slate-500 dark:text-slate-400 -ml-3 cursor-pointer user-select-none"
             @click="() => {
               if (!loading) state.available = !state.available
             }"
@@ -226,13 +271,37 @@ onMounted(() => {
           </span>
         </div>
 
+        <UDivider class="" />
+        <div class="flex gap-2">
+          <UButton
+            class="ml-auto"
+            :color="color" 
+            variant="outline" 
+            size="lg" 
+            @click="visible = false"
+            :disabled="loading"
+          >
+            <span class="text-center">Cancelar</span>
+          </UButton>
+          <UButton
+            type="submit"
+            :color="color" 
+            size="lg"
+            class="min-w-[90px] flex"
+            :disabled="loading"
+            >
+            <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
+            <span v-else class="text-center mx-auto">Guardar</span>
+          </UButton>
+        </div>
+
       </UForm>
     </template>
-    <template #footer>
+    <!-- <template #footer>
       <div class="flex gap-2">
         <UButton
           class="ml-auto"
-          :color="entity ? 'sky' : 'emerald'" 
+          :color="color" 
           variant="outline" 
           size="lg" 
           @click="visible = false"
@@ -242,7 +311,7 @@ onMounted(() => {
         </UButton>
         <UButton
           @click="submit"
-          :color="entity ? 'sky' : 'emerald'" 
+          :color="color" 
           size="lg"
           class="min-w-[90px] flex"
           :disabled="loading"
@@ -251,7 +320,7 @@ onMounted(() => {
           <span v-else class="text-center mx-auto">Guardar</span>
         </UButton>
       </div>
-    </template>
+    </template> -->
   </BaseDialog>
 </template>
 

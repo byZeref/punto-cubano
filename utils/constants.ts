@@ -16,3 +16,8 @@ export const notificationTypes = {
   NOTIFICATION_SUCCESS: 'success',
   NOTIFICATION_ERROR: 'error',
 }
+
+export const regex = {
+  PRICE_REGEX: /^[1-9]\d*(\.\d+)?$/,
+  EMAIL_REGEX: /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+}
