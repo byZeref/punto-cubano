@@ -138,7 +138,7 @@ const handleDetailsProduct = () => {
 
 <style scoped>
 .product-card {
-  @apply cursor-pointer duration-200;
+  cursor: pointer;
   &:hover {
     .product-image {
       scale: 1.10;
