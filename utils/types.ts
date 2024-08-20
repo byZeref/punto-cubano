@@ -22,7 +22,7 @@ export interface Product {
   description: string,
   image?: string,
   imageUrl?: string,
-  price: number,
+  price: string,
   category: string,
   available: boolean,
 }
@@ -32,7 +32,7 @@ export interface ProductPayload {
   name: string,
   description: string,
   image?: Blob,
-  price: number,
+  price: string,
   category: string,
   available: boolean,
   oldImageName?: string,
