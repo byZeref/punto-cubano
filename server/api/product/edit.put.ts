@@ -1,5 +1,6 @@
 import { useSupabase } from "~/server/utils/supabase"
 import type { Product, ProductPayload } from "~/utils/types"
+import { validateProductPayload } from "~/server/utils/validations"
 
 export default defineEventHandler(async (event) => {
   const { supabase } = await useSupabase(event)
@@ -10,10 +11,13 @@ export default defineEventHandler(async (event) => {
     id: form!.find(item => item.name === 'id')!.data.toString(),
     name: form!.find(item => item.name === 'name')!.data.toString(),
     description: form!.find(item => item.name === 'description')!.data.toString(),
-    price: parseFloat(form!.find(item => item.name === 'price')!.data.toString()),
+    price: form!.find(item => item.name === 'price')!.data.toString(),
     category: form!.find(item => item.name === 'category')!.data.toString(),
     available: form!.find(item => item.name === 'available')!.data.toString() === 'true',
   }
+
+  validateProductPayload(payload)
+
   const product: Product = {
     name: payload.name,
     description: payload.description,

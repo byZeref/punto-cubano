@@ -5,7 +5,7 @@ export const notify = (message: string, type: ToastType) => {
   const title = type === 'error' ? 'Error!' : 'Bien!'
   const color = type === 'error' ? 'red' : 'emerald'
   const icon = type === 'error' ? 'i-heroicons-exclamation-triangle' : 'i-heroicons-check-badge'
-  const timeout = type === 'error' ? 5000 : 3000
+  const timeout = type === 'error' ? 5000 : 2000
 
   toast.add({
     description: message,

@@ -3,9 +3,9 @@ import { regex } from '~/utils/constants'
 
 const { PRICE_REGEX } = regex
 
-export const validatePayload = (payload: ProductPayload) => {
+export const validateProductPayload = (payload: ProductPayload) => {
   const { name, description, price, category } = payload
-  
+
   if (name === 'undefined') {
     throw createError({ statusCode: 400, statusMessage: 'Bad Request', message: 'field `name` is required' })
   }
@@ -22,3 +22,4 @@ export const validatePayload = (payload: ProductPayload) => {
     throw createError({ statusCode: 400, statusMessage: 'Bad Request', message: 'field `category` is required' })
   }
 }
+
