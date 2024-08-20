@@ -12,6 +12,7 @@ const props = defineProps({
 })
 const showProductModal = ref(false)
 const showRemoveConfirm = ref(false)
+const showDetails = ref(false)
 const cardUI = {
   body: {
     padding: 'p-0 sm:p-0',
@@ -44,6 +45,9 @@ const handleEditProduct = () => {
 const handleRemoveProduct = () => {
   showRemoveConfirm.value = true
 }
+const handleDetailsProduct = () => {
+  showDetails.value = true
+}
 
 </script>
 
@@ -56,7 +60,7 @@ const handleRemoveProduct = () => {
     @update:show="(val) => showProductModal = val"
     @refresh="$emit('refresh')"
   />
-  <ProductRemoveDialog
+  <ProductRemove
     v-if="showRemoveConfirm"
     :show="showRemoveConfirm"
     :entity="product"
@@ -64,16 +68,31 @@ const handleRemoveProduct = () => {
     @update:show="(val) => showRemoveConfirm = val"
     @refresh="$emit('refresh')"
   />
+  <ProductDetails
+    v-if="showDetails"
+    :show="showDetails"
+    :entity="product"
+    :is-dark-mode="isDarkMode"
+    @update:show="(val) => showDetails = val"
+  />
 
-  <UCard :ui="cardUI">
+  <UCard
+    class="product-card"
+    :ui="cardUI"
+    @click="handleDetailsProduct"
+  >
     <div class="flex h-28 lg:h-32">
-      <div class="h-full w-[120px] lg:w-[140px] flex-shrink-0">
-        <img class="h-full w-auto object-cover" :src="product.imageUrl" alt="Product image">
+      <div class="h-full w-[120px] lg:w-[140px] flex-shrink-0 overflow-hidden">
+        <img
+          :src="product.imageUrl" 
+          class="product-image h-full w-auto object-cover duration-200"
+          alt="Product image"
+        >
       </div>
       <div class="w-full flex flex-col px-4 lg:px-4 py-1 lg:py-2 lg:gap-[2px] relative">
-        <span class="font-medium text-slate-900 dark:text-white">{{ product.name }}</span>
+        <span class="product-name font-medium text-slate-900 dark:text-white">{{ product.name }}</span>
         <UTooltip :text="product.description" :popper="{ placement: 'top' }" :ui="tooltipUI">
-          <span class="text-xs line-clamp-1 cursor-help">{{ product.description }}</span>
+          <span class="text-xs line-clamp-1">{{ product.description }}</span>
         </UTooltip>
         <AvailabilityBadge :available="product.available" />
         <div class="mt-auto flex items-center justify-between">
@@ -85,14 +104,14 @@ const handleRemoveProduct = () => {
             <!-- TODO v-if="isLogged" -->
             <div
               class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
-              @click="handleAddProductToCart(product)"
+              @click.stop="handleAddProductToCart(product)"
             >
               <IconShoppingCartAdd :color="isDarkMode ? '#fff' : 'black'" />
             </div>
             <!-- TODO v-else -->
             <div class="flex gap-1">
               <UButton
-                @click="handleEditProduct(product)"
+                @click.stop="handleEditProduct(product)"
                 :ui="{ rounded: 'rounded-full' }"
                 icon="i-heroicons-pencil-square"
                 size="sm"
@@ -101,7 +120,7 @@ const handleRemoveProduct = () => {
                 variant="solid"
               />
               <UButton
-                @click="handleRemoveProduct(product)"
+                @click.stop="handleRemoveProduct(product)"
                 :ui="{ rounded: 'rounded-full' }"
                 icon="i-heroicons-trash"
                 size="sm"
@@ -118,5 +137,15 @@ const handleRemoveProduct = () => {
 </template>
 
 <style scoped>
-
+.product-card {
+  @apply cursor-pointer duration-200;
+  &:hover {
+    .product-image {
+      scale: 1.10;
+    }
+    .product-name {
+      color: var(--primary-color);
+    }
+  }
+}
 </style>

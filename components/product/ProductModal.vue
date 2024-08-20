@@ -16,7 +16,6 @@ const props = defineProps({
   },
   isDarkMode: Boolean,
 })
-const modalUI = { width: 'w-full sm:max-w-2xl' }
 const visible = ref(props.show)
 watchEffect(() => {
   if (!visible.value) emit('update:show', false)
@@ -72,14 +71,12 @@ const submit = async () => {
 
   let res
   loading.value = true
-  if (props.entity) { // <--- edit product
+  if (props.entity) {
     formData.append('id', props.entity.id)
     if (imageIsFile) formData.append('oldImageName', props.entity.image)
-    res = await editProduct(formData)
-      .finally(() => { loading.value = false })
-  } else { // <--- create product
-    res = await createProduct(formData)
-      .finally(() => { loading.value = false })
+    res = await editProduct(formData).finally(() => { loading.value = false })
+  } else {
+    res = await createProduct(formData).finally(() => { loading.value = false })
   }
   const { data, status } = res
   console.log(status, data)
@@ -146,7 +143,8 @@ onMounted(() => {
     :show="visible"
     :prevent-close="loading"
     :footer="false"
-    @update:show="(val) => visible = val" :ui="modalUI"
+    size="2xl"
+    @update:show="(val) => visible = val" 
   >
     <template #header>
       <h4 class="text-slate-900 dark:text-slate-300 font-medium text-xl">
@@ -163,6 +161,7 @@ onMounted(() => {
             <UInput
               v-model="state.name"
               size="lg"
+              :ui="{ size: { lg: 'text-md' } }"
               :color="color"
               :disabled="loading"
               :trailing-icon="error ? 'i-heroicons-exclamation-triangle' : undefined"
@@ -181,6 +180,7 @@ onMounted(() => {
             <UTextarea
               v-model="state.description"
               size="lg"
+              :ui="{ size: { lg: 'text-md' } }"
               :color="color"
               :rows="1" 
               :maxrows="3" 
@@ -203,6 +203,7 @@ onMounted(() => {
             <UInput
               v-model="state.price"
               size="lg"
+              :ui="{ size: { lg: 'text-md' } }"
               :color="color"
               :disabled="loading"
               :trailing-icon="error ? 'i-heroicons-exclamation-triangle' : undefined"
@@ -220,6 +221,7 @@ onMounted(() => {
           <USelectMenu
             v-model="state.category"
             size="lg"
+            :ui="{ size: { lg: 'text-md' } }"
             :color="color"
             :options="PRODUCT_CATEGORIES"
             :disabled="loading"
@@ -297,33 +299,12 @@ onMounted(() => {
 
       </UForm>
     </template>
-    <!-- <template #footer>
-      <div class="flex gap-2">
-        <UButton
-          class="ml-auto"
-          :color="color" 
-          variant="outline" 
-          size="lg" 
-          @click="visible = false"
-          :disabled="loading"
-        >
-          <span class="text-center">Cancelar</span>
-        </UButton>
-        <UButton
-          @click="submit"
-          :color="color" 
-          size="lg"
-          class="min-w-[90px] flex"
-          :disabled="loading"
-          >
-          <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
-          <span v-else class="text-center mx-auto">Guardar</span>
-        </UButton>
-      </div>
-    </template> -->
   </BaseDialog>
 </template>
 
 <style scoped>
-
+input {
+  font-size: 30px !important;
+  @apply text-lg;
+}
 </style>

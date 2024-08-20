@@ -1,4 +1,7 @@
 <script setup>
+import ProductModal from '~/components/product/ProductModal.vue'
+import ProductCard from '~/components/product/ProductCard.vue'
+
 const { ERR_INTERNET_CONNECTION } = errorMessages
 const { NOTIFICATION_ERROR } = notificationTypes
 
