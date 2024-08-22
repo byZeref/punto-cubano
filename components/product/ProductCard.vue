@@ -10,6 +10,7 @@ const props = defineProps({
   isDarkMode: Boolean,
   isLogged: Boolean,
 })
+const cartStore = useCartStore()
 const showProductModal = ref(false)
 const showRemoveConfirm = ref(false)
 const showDetails = ref(false)
@@ -37,7 +38,7 @@ const getPriceDecimal = (price) => {
 }
 
 const handleAddProductToCart = (target) => {
-  console.log('add product to cart', target)
+  cartStore.add(target)
 }
 const handleEditProduct = () => {
   showProductModal.value = true
@@ -102,6 +103,12 @@ const handleDetailsProduct = () => {
           </span>
           <div class="flex gap-1 absolute right-2 bottom-2">
             <!-- TODO v-if="isLogged" -->
+            <div
+              class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
+              @click.stop="cartStore.remove(product)"
+            >
+              -
+            </div>
             <div
               class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
               @click.stop="handleAddProductToCart(product)"

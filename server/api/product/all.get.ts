@@ -6,9 +6,6 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
   const { data: products, error, status } = await client.from('products').select()
-  console.log(products)
-  console.log(error)
-  console.log(status)
 
   if (error) {
     throw createError({
@@ -23,7 +20,6 @@ export default defineEventHandler(async (event) => {
     prod.imageUrl = data.publicUrl
   })
   
-
   return products
   
 })

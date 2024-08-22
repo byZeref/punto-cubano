@@ -9,13 +9,11 @@ const router = useRouter()
 const colorMode = useColorMode()
 const isDarkMode = useCookie('dark')
 const isOpen = ref(false)
-const ui = {
-  overlay: {
-    background: 'bg-black/50 dark:bg-gray-800/75',
-  },
-}
-
+const cartStore = useCartStore()
 const authStore = useAuthStore()
+
+const productsCount = computed(() => cartStore.count)
+
 const toggleMode = () => {
   colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
   isDarkMode.value = colorMode.preference === 'dark'
@@ -45,7 +43,7 @@ onMounted(() => isDarkMode.value = colorMode.preference === 'dark')
         @open="isOpen = true"
       />
 
-      <ActionButtons :is-dark-mode="isDarkMode" :toggle-mode="toggleMode" />
+      <ActionButtons :is-dark-mode="isDarkMode" :toggle-mode="toggleMode" :products-count="productsCount" />
 
       <MobileMenu
         v-if="isOpen"

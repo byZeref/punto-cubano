@@ -37,3 +37,5 @@ export interface ProductPayload {
   available: boolean,
   oldImageName?: string,
 }
+
+export type ProductCart = Product & { quantity: number, subtotal: number }
