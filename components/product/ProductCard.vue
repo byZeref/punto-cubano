@@ -102,21 +102,13 @@ const handleDetailsProduct = () => {
             <span class="font-medium text-2xl lg:text-3xl tracking-tighter">{{ getPriceInteger(product.price) }}</span><span class="font-medium text-base lg:text-lg">.{{ getPriceDecimal(product.price) }}</span>
           </span>
           <div class="flex gap-1 absolute right-2 bottom-2">
-            <!-- TODO v-if="isLogged" -->
-            <div
-              class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
-              @click.stop="cartStore.remove(product)"
-            >
-              -
-            </div>
             <div
               class="flex items-center justify-center h-8 lg:h-10 w-8 lg:w-10 cursor-pointer p-1 border border-1 border-slate-600 dark:border-white rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 duration-200"
               @click.stop="handleAddProductToCart(product)"
             >
               <IconShoppingCartAdd :color="isDarkMode ? '#fff' : 'black'" />
             </div>
-            <!-- TODO v-else -->
-            <div class="flex gap-1">
+            <div v-if="isLogged" class="flex gap-1">
               <UButton
                 @click.stop="handleEditProduct(product)"
                 :ui="{ rounded: 'rounded-full' }"
