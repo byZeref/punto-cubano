@@ -62,7 +62,7 @@ const handleAddToCart = () => {
         <p class="text-sm my-1 sm:my-2 leading-4">{{ entity.description }}</p>
         <p class="font-semibold">${{ entity.price.toFixed(2) }}</p>
       </div>
-      <div class="actions flex justify-between sm:justify-end gap-2 my-4">
+      <div class="actions flex justify-between sm:justify-end gap-4 my-4">
         <UButtonGroup size="xl" orientation="horizontal">
           <UButton
             :ui="{color: {white:{ soft: quantity > 1 ? 'shadow-lg' : ''}}}"
