@@ -23,8 +23,14 @@ const visible = ref(props.show)
 watchEffect(() => {
   if (!visible.value) emit('update:show', false)
 })
+const cartStore = useCartStore()
 const quantity = ref(1)
 const amount = computed(() => (quantity.value * props.entity.price).toFixed(2))
+
+const handleAddToCart = () => {
+  cartStore.add(props.entity, quantity.value)
+  visible.value = false
+}
 
 </script>
 
@@ -86,6 +92,7 @@ const amount = computed(() => (quantity.value * props.entity.price).toFixed(2))
           class="flex justify-center items-center grow"
           variant="solid"
           :label="`Agregar por $${amount}`"
+          @click="handleAddToCart"
         />
       </div>
     </template>
