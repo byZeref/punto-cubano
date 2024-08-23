@@ -4,6 +4,7 @@ import ProductCard from '~/components/product/ProductCard.vue'
 
 const { ERR_INTERNET_CONNECTION } = errorMessages
 const { NOTIFICATION_ERROR } = notificationTypes
+const { BTN_PRIMARY } = buttons_ui
 
 const { data: products, error, refresh } = await useFetch('/api/product/all', {
   onRequestError({ request, response, options }) {
@@ -17,20 +18,19 @@ console.log('products', products)
 console.log('error', error)
 
 const isDarkMode = useCookie('dark')
+const router = useRouter()
+const cartStore = useCartStore()
 const authStore = useAuthStore()
 const isLogged = computed(() => authStore.isLogged)
-const btnUI = {
-  color: {
-    primary: {
-      solid: `shadow-sm text-white dark:text-white bg-[#4c1b1e] hover:bg-[#4c1b1ef0] disabled:bg-[#4c1b1e] 
-      dark:bg-[#4c1b1e] dark:hover:bg-[#4c1b1ed0] dark:disabled:bg-[#4c1b1e]`,
-    },
-  }
-}
+const hasAnOrder = computed(() => cartStore.count > 0)
 
 const showProductModal = ref(false)
 const handleNewProduct = () => {
   showProductModal.value = true
+}
+
+const handleGoToCart = () => {
+  router.push('/cart')
 }
 
 </script>
@@ -44,13 +44,13 @@ const handleNewProduct = () => {
     @refresh="refresh"
   />
 
-  <section>
+  <section class="relative">
     <div class="flex flex-wrap gap-1 justify-between items-center">
       <PageHeader title="Listado de productos" />
-      <!-- TODO v-if="isLogged" -->
       <UButton
+        v-if="isLogged"
         @click="handleNewProduct"
-        :ui="btnUI"
+        :ui="BTN_PRIMARY"
         icon="i-heroicons-plus"
         size="md"
         color="primary"
@@ -78,6 +78,14 @@ const handleNewProduct = () => {
       title="Ups!"
       description="No se han encontrado productos. Agregue uno nuevo para verlo aquí."
       :actions="[{ color: 'red', variant: 'outline', label: 'Agregar un nuevo producto', click: () => handleNewProduct() }]"
+    />
+
+    <FixedBottom
+      v-if="hasAnOrder"
+      label="Ver mi pedido"
+      :action="handleGoToCart"
+      :total-products="cartStore.count"
+      :total-amount="cartStore.total"
     />
   </section>
 </template>
