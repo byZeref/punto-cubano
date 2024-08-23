@@ -5,6 +5,7 @@ definePageMeta({
   middleware: 'auth',
 })
 
+const { BTN_PRIMARY } = buttons_ui
 const authStore = useAuthStore()
 const router = useRouter()
 const passwordType = ref('password')
@@ -34,14 +35,6 @@ const togglePasswordType = () => {
   passwordType.value = passwordType.value === 'password' ? 'text' : 'password'
 }
 
-const btnUI = {
-  color: {
-    primary: {
-      solid: `shadow-sm text-white dark:text-white bg-[#4c1b1e] hover:bg-[#4c1b1ef0] disabled:bg-[#4c1b1e] 
-      dark:bg-[#4c1b1e] dark:hover:bg-[#4c1b1ed0] dark:disabled:bg-[#4c1b1e]`,
-    },
-  }
-}
 </script>
 
 <template>
@@ -97,7 +90,7 @@ const btnUI = {
             color="primary"
             size="xl"
             block
-            :ui="btnUI"
+            :ui="BTN_PRIMARY"
             :disabled="loading"
             class="min-h-[44px]"
           >
