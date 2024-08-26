@@ -10,13 +10,21 @@ const handleAddQuantity = (target) => {
   cartStore.add(target)
 }
 
+const showOrderDataModal = ref(false)
 const handleConfirmOrder = () => {
   console.log('confirm order')
   // TODO show form
+  showOrderDataModal.value = true
 }
 </script>
 
 <template>
+  <OrderDataModal
+    v-if="showOrderDataModal"
+    :show="showOrderDataModal"
+    @update:show="(val) => showOrderDataModal = val" 
+  />
+  
   <section class="relative pb-20">
     <div class="flex justify-between items-center">
       <NuxtLink to="/products" class="flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 py-1 px-2 rounded-md duration-200">
@@ -35,10 +43,10 @@ const handleConfirmOrder = () => {
       v-if="!products.length"
       icon="i-heroicons-information-circle"
       color="sky"
-      variant="subtle"
+      variant="soft"
       title="Carrito vacío!"
       description="No se han agregado productos a su carrito."
-      :actions="[{ variant: 'solid', color: 'sky', label: 'Ver todos los productos', click: () => router.push('/products') }]"
+      :actions="[{ variant: 'outline', color: 'sky', label: 'Ver todos los productos', click: () => router.push('/products') }]"
     />
 
     <div v-else class="flex flex-col gap-5">
