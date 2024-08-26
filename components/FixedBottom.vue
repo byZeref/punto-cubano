@@ -32,7 +32,7 @@ const hasOrderInfo = computed(() => props.totalAmount && props.totalProducts)
       <UButton
         :ui="BTN_PRIMARY"
         size="xl"
-        :color="hasOrderInfo ? 'primary' : 'red'"
+        :color="hasOrderInfo ? 'primary' : 'teal'"
         variant="solid"
         class="py-3 font-semibold flex justify-center items-center grow"
         @click="action"
