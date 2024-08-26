@@ -5,10 +5,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  size: {
-    type: String,
+  is2xl: {
+    type: Boolean,
     required: false,
-    default: 'lg',
+    default: false,
   },
   header: {
     type: Boolean,
@@ -24,7 +24,8 @@ const props = defineProps({
 })
 const visible = ref(props.show)
 const ui = computed(() => {
-  return { padding: 'p-0',  width: `w-full sm:max-w-${props.size}` }
+  const maxWidth = props.is2xl ? 'sm:max-w-2xl' : 'sm:max-w-lg'
+  return { padding: 'p-0',  width: `w-full ${maxWidth}` }
 })
 
 watchEffect(() => {

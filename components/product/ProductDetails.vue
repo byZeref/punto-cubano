@@ -40,7 +40,7 @@ const handleAddToCart = () => {
     :show="visible"
     :header="false"
     :footer="false"
-    size="2xl"
+    is-2xl
     @update:show="(val) => visible = val"
   >
     <template #body>

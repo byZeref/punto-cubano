@@ -143,7 +143,7 @@ onMounted(() => {
     :show="visible"
     :prevent-close="loading"
     :footer="false"
-    size="2xl"
+    is-2xl
     @update:show="(val) => visible = val" 
   >
     <template #header>
