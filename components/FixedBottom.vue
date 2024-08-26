@@ -24,7 +24,7 @@ const hasOrderInfo = computed(() => props.totalAmount && props.totalProducts)
 
 <template>
   <div class="fixed-bottom fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-gray-800 w-full">
-    <div class="flex justify-between items-center gap-2">
+    <div class="flex justify-between items-center gap-2 max-w-6xl mx-auto lg:px-10">
       <div v-if="hasOrderInfo" class="w-[100px]">
         <p class="text-sm text-slate-500 dark:text-slate-300">{{ totalProducts }} productos</p>
         <p class="font-semibold text-lg">${{ totalAmount.toFixed(2) }}</p>

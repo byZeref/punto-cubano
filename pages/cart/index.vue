@@ -1,5 +1,6 @@
 <script setup>
 const cartStore = useCartStore()
+const router = useRouter()
 const products = computed(() => cartStore.products)
 
 const handleDiscountQuantity = (target) => {
@@ -11,7 +12,7 @@ const handleAddQuantity = (target) => {
 
 const handleConfirmOrder = () => {
   console.log('confirm order')
-  
+  // TODO show form
 }
 </script>
 
@@ -30,10 +31,15 @@ const handleConfirmOrder = () => {
 
     <UDivider class="mt-4 mb-6" />
 
-    <div v-if="!products.length">
-      <!-- TODO estilar alerta de carrito vacio -->
-      <span>No se han agregado productos a su carrito.</span>
-    </div>
+    <UAlert
+      v-if="!products.length"
+      icon="i-heroicons-information-circle"
+      color="sky"
+      variant="subtle"
+      title="Carrito vacío!"
+      description="No se han agregado productos a su carrito."
+      :actions="[{ variant: 'solid', color: 'sky', label: 'Ver todos los productos', click: () => router.push('/products') }]"
+    />
 
     <div v-else class="flex flex-col gap-5">
       <div
