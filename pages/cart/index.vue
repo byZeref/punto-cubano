@@ -12,8 +12,6 @@ const handleAddQuantity = (target) => {
 
 const showOrderDataModal = ref(false)
 const handleConfirmOrder = () => {
-  console.log('confirm order')
-  // TODO show form
   showOrderDataModal.value = true
 }
 </script>
