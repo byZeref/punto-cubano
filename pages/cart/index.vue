@@ -2,6 +2,7 @@
 const cartStore = useCartStore()
 const router = useRouter()
 const products = computed(() => cartStore.products)
+const isDarkMode = useCookie('dark')
 
 const handleDiscountQuantity = (target) => {
   cartStore.remove(target)
@@ -20,6 +21,7 @@ const handleConfirmOrder = () => {
   <OrderDataModal
     v-if="showOrderDataModal"
     :show="showOrderDataModal"
+    :is-dark-mode="isDarkMode"
     @update:show="(val) => showOrderDataModal = val" 
   />
   

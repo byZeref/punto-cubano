@@ -1,5 +1,6 @@
 <script setup>
 import IconSpinner from '~/components/icons/IconSpinner.vue'
+import IconWhatsapp from '~/components/icons/IconWhatsapp.vue'
 
 const { PRICE_REGEX, EMAIL_REGEX } = regex
 const cartStore = useCartStore()
@@ -53,6 +54,7 @@ const handleFormValidation = async () => {
 const submit = async () => {
   console.log('submit')
   console.log(state)
+  // TODO save order in bd and send it to operator via whatsapp (server)
 }
 
 </script>
@@ -83,7 +85,7 @@ const submit = async () => {
               <UAlert
                 icon="i-heroicons-information-circle"
                 color="teal"
-                variant="outline"
+                variant="soft"
                 title="Importante!"
                 description="Esta información solo se usará para contactar con usted y mantenerlo al tanto del estado en el que se encuentra su pedido."
                 class="mb-2"
@@ -171,11 +173,9 @@ const submit = async () => {
                     @click="handleFormValidation"
                     color="teal" 
                     size="lg"
-                    class="min-w-[90px] flex"
                     :disabled="loading"
                   >
-                    <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
-                    <span v-else class="text-center mx-auto">Siguiente</span>
+                    <span class="text-center mx-auto">Siguiente</span>
                   </UButton>
                 </div>
               </UForm>
@@ -187,7 +187,7 @@ const submit = async () => {
                   Su pedido cuenta con los siguientes productos:
                 </h6>
 
-                <ul class="flex flex-col gap-3 mb-6">
+                <ul class="flex flex-col gap-3 mb-3">
                   <li v-for="prod in products" :key="prod.id">
                     <p class="font-semibold">{{ prod.name }}</p>
                     <p class="text-sm">Cantidad: {{ prod.quantity }}</p>
@@ -196,16 +196,24 @@ const submit = async () => {
                 </ul>
 
                 <div class="flex flex-col items-end mb-3">
-                  <p>Total a pagar</p>
+                  <p class="text-sm">Total a pagar</p>
                   <p class="text-xl font-bold">${{ cartStore.total.toFixed(2) }}</p>
                 </div>
 
-                <UDivider class="mt-auto" />
+                <UAlert
+                  icon="i-heroicons-information-circle"
+                  color="teal"
+                  variant="soft"
+                  title="Atención!"
+                  description="Se enviará su pedido y se le comunicará con el operador vía WhatsApp."
+                  class="mb-5 mt-auto"
+                />
 
-                <div class="flex gap-2 mt-5">
+                <UDivider />
+
+                <div class="flex gap-2 mt-5 flex-wrap justify-end">
                   <UButton
                     @click="visible = false"
-                    class="ml-auto"
                     color="teal" 
                     variant="outline" 
                     size="lg" 
@@ -217,11 +225,14 @@ const submit = async () => {
                     @click="submit"
                     color="teal" 
                     size="lg"
-                    class="min-w-[90px] flex"
+                    class="min-w-[230px] flex justify-center items-center"
                     :disabled="loading"
                   >
-                    <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
-                    <span v-else class="text-center mx-auto">Confirmar ahora</span>
+                    <IconSpinner v-if="loading" size="24" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
+                    <div v-else class="flex items-center justify-center gap-1">
+                      <IconWhatsapp :color="isDarkMode ? 'black' : '#fff'" />
+                      <span class="text-center">Enviar y contactar operador</span>
+                    </div>
                   </UButton>
                 </div>
               </div>
