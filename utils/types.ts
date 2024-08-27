@@ -39,3 +39,7 @@ export interface ProductPayload {
 }
 
 export type ProductCart = Product & { quantity: number, subtotal: number }
+
+export interface Order {
+  products: ProductCart[],
+}
