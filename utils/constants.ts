@@ -32,3 +32,10 @@ export const buttons_ui = {
     }
   },
 }
+
+export const order_status = {
+  ORDER_PENDING: 'pending',
+  ORDER_SENT: 'sent',
+  ORDER_DELIVERED: 'delivered',
+  ORDER_CANCELLED: 'cancelled',
+}

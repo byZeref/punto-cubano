@@ -8,7 +8,6 @@ export const useCartStore = defineStore('cart', () => {
 
   const add = (product: Product, quantity = 1) => {
     const target = products.value?.find(prod => prod.id === product.id)
-    console.log(target);
     
     if (target) {
       target.quantity += quantity

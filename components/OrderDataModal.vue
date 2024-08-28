@@ -45,16 +45,31 @@ const onError = async (event) => {
   element?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 const handleFormValidation = async () => {
-  const v = await form.value.validate()
+  await form.value.validate()
     .then(() => selectedTab.value = 1)
     .catch(() => selectedTab.value = 0)
 
 }
 
 const submit = async () => {
-  console.log('submit')
-  console.log(state)
+  console.log('submit', state)
+  const payload = {
+    username: state.fullName,
+    phone: state.phone,
+    email: state.email,
+    products: products.value.map(({ id, quantity }) => {
+      return { id, quantity }
+    }),
+  }
   // TODO save order in bd and send it to operator via whatsapp (server)
+  loading.value = true
+  const { data } = await useFetch('/api/order/create', {
+    method: 'POST',
+    body: payload,
+  }).finally(() => loading.value = false)
+
+  console.log(data)
+  
 }
 
 </script>
