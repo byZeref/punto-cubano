@@ -11,14 +11,7 @@ const props = defineProps({
   },
   isDarkMode: Boolean,
 })
-const btnUI = {
-  color: {
-    primary: {
-      solid: `shadow-sm text-white dark:text-white bg-[#4c1b1e] hover:bg-[#4c1b1ef0] disabled:bg-[#4c1b1e] 
-      dark:bg-[#4c1b1e] dark:hover:bg-[#4c1b1ed0] dark:disabled:bg-[#4c1b1e]`,
-    },
-  }
-}
+const { BTN_PRIMARY } = buttons_ui
 const visible = ref(props.show)
 watchEffect(() => {
   if (!visible.value) emit('update:show', false)
@@ -58,7 +51,10 @@ const handleAddToCart = () => {
         >
       </div>
       <div class="description mt-4 text-slate-900 dark:text-slate-100">
-        <h6 class="text-xl font-bold">{{ entity.name }}</h6>
+        <div class="flex items-center gap-2">
+          <h6 class="text-xl font-bold">{{ entity.name }}</h6>
+          <AvailabilityBadge :available="entity.available" />
+        </div>
         <p class="text-sm my-1 sm:my-2 leading-4">{{ entity.description }}</p>
         <p class="font-semibold">${{ entity.price.toFixed(2) }}</p>
       </div>
@@ -66,18 +62,24 @@ const handleAddToCart = () => {
         <UButtonGroup size="xl" orientation="horizontal">
           <UButton
             :ui="{color: {white:{ soft: quantity > 1 ? 'shadow-lg' : ''}}}"
-            :disabled="quantity === 1"
+            :disabled="quantity === 1 || !entity.available"
             icon="i-heroicons-minus"
             color="white"
             variant="soft"
             :class="[quantity > 1 ? 'text-red-500 dark:text-red-400' : 'text-black dark:text-white']"
             @click="quantity--"
           />
-          <UButton color="white" variant="soft" class="px-7 text-slate-900 dark:text-slate-100 font-medium">
+          <UButton
+            :disabled="!entity.available"
+            color="white"
+            variant="soft"
+            class="px-7 text-slate-900 dark:text-slate-100 font-medium"
+          >
             {{ quantity }}
           </UButton>
           <UButton
-          :ui="{color: {white:{ soft: 'shadow-lg'}}}"
+            :disabled="!entity.available"
+            :ui="{color: {white:{ soft: 'shadow-lg'}}}"
             icon="i-heroicons-plus"
             color="white"
             variant="soft"
@@ -86,7 +88,8 @@ const handleAddToCart = () => {
           />
         </UButtonGroup>
         <UButton
-          :ui="btnUI"
+          :disabled="!entity.available"
+          :ui="BTN_PRIMARY"
           size="xl"
           color="primary"
           class="flex justify-center items-center grow"
