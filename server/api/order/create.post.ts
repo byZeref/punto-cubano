@@ -20,13 +20,19 @@ export default defineEventHandler(async (event) => {
     .insert(order)
     .select()
   
+  console.log('error', error)
+  if (error) {
+    throw createError({
+      statusCode: statusOrder,
+      message: 'No se pudo guardar el pedido. Por favor, inténtelo de nuevo.',
+    })
+  }
+
   const _order = data[0]
   console.log('data', _order)
   console.log('status', statusOrder)
-  console.log('error', error)
   
   let statusProducts
-  let productsError
   if (statusOrder === 201) {
     const orderProducts: OrderProduct[] = []
     products.forEach(({ id, quantity }: { id: number, quantity: number }) => {
@@ -37,24 +43,35 @@ export default defineEventHandler(async (event) => {
       })
     })
 
-    const { status, error } = await supabase
+    const { status, error: errorProducts } = await supabase
       .from('order_product')
       .insert(orderProducts)
 
     statusProducts = status
-    productsError = error
     console.log('prod-status', statusProducts)
-    console.log('prod-error', productsError)
+    console.log('prod-error', errorProducts)
 
-    if (error) {
-      // TODO eliminar filas en `order_product` si existen
-      // TODO eliminar fila recien insertada en `orders`
+    if (errorProducts) {
+      // eliminar filas en `order_product` si existen
+      const { error: orderProductsError } = await supabase
+        .from('order_product')
+        .delete()
+        .eq('order', _order.id)
+
+      // eliminar fila recien insertada en `orders`
+      const { error: orderError } = await supabase
+        .from('orders')
+        .delete()
+        .eq('id', _order.id)
     }
   }
   
+  const finalStatus = statusOrder === 201 && statusProducts === 201 
+    ? 201 
+    : statusOrder !== 201 ? statusOrder : statusProducts
+
   return {
     order: _order,
-    statusOrder,
-    statusProducts,
+    status: finalStatus,
   }
 })

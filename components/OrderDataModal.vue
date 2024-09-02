@@ -3,6 +3,8 @@ import IconSpinner from '~/components/icons/IconSpinner.vue'
 import IconWhatsapp from '~/components/icons/IconWhatsapp.vue'
 
 const { PRICE_REGEX, EMAIL_REGEX } = regex
+const { ERR_INTERNET_CONNECTION } = errorMessages
+const { NOTIFICATION_ERROR, NOTIFICATION_SUCCESS } = notificationTypes
 const cartStore = useCartStore()
 const products = computed(() => cartStore.products)
 const selectedTab = ref(0)
@@ -63,12 +65,24 @@ const submit = async () => {
   }
   // TODO save order in bd and send it to operator via whatsapp (server)
   loading.value = true
-  const { data } = await useFetch('/api/order/create', {
+  const { data, status } = await useFetch('/api/order/create', {
     method: 'POST',
     body: payload,
+    onRequestError({ request, response, options }) {
+      notify(ERR_INTERNET_CONNECTION, NOTIFICATION_ERROR)
+    },
+    onResponseError({ request, response, options }) {
+      notify(response._data.message, NOTIFICATION_ERROR)
+    },
   }).finally(() => loading.value = false)
 
-  console.log(data)
+  console.log(data, status)
+  if (status.value === 'success') {
+    visible.value = false
+    notify('Su pedido ha sigo enviado correctamente', NOTIFICATION_SUCCESS)
+    // TODO go to whatsapp
+    
+  }
   
 }
 
