@@ -204,16 +204,23 @@ const submit = async () => {
 
                 <ul class="flex flex-col gap-3 mb-3">
                   <li v-for="prod in products" :key="prod.id">
-                    <p class="font-semibold">{{ prod.name }}</p>
+                    <p class="font-semibold text-blue-500">{{ prod.name }}</p>
                     <p class="text-sm">Cantidad: {{ prod.quantity }}</p>
                     <p class="text-sm">Subtotal: ${{ prod.subtotal.toFixed(2) }}</p>
                   </li>
                 </ul>
 
-                <div class="flex flex-col items-end mb-3">
-                  <p class="text-sm">Total a pagar</p>
-                  <p class="text-xl font-bold">${{ cartStore.total.toFixed(2) }}</p>
-                </div>
+                <UAlert
+                  icon="i-heroicons-banknotes"
+                  color="blue"
+                  variant="outline"
+                  title="Total a pagar"
+                  class="mb-5 mt-auto"
+                >
+                  <template #description>
+                    <span class="text-lg font-bold">${{ cartStore.total.toFixed(2) }}</span>
+                  </template>
+                </UAlert>
 
                 <UAlert
                   icon="i-heroicons-information-circle"
