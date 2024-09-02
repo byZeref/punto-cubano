@@ -1,0 +1,6 @@
+export const config = {
+  SITE_URL: import.meta.env.VITE_COMPANY_SITE_URL,
+  OPERATOR_NUMBER: import.meta.env.VITE_WHATSAPP_OPERATOR_PHONE_NUMBER,
+  FACEBOOK_URL: import.meta.env.VITE_COMPANY_FACEBOOK_URL,
+  INSTAGRAM_URL: import.meta.env.VITE_COMPANY_INSTAGRAM_URL,
+}

@@ -5,6 +5,31 @@ import IconWhatsapp from '~/components/icons/IconWhatsapp.vue'
 const { PRICE_REGEX, EMAIL_REGEX } = regex
 const { ERR_INTERNET_CONNECTION } = errorMessages
 const { NOTIFICATION_ERROR, NOTIFICATION_SUCCESS } = notificationTypes
+const { SITE_URL, OPERATOR_NUMBER } = config
+const whatsAppMessage = computed(() => {
+  // 🏣 🏢 🏬 📋 📑 🗒️ 📝
+  const mainHeader = `> 🏢 *Empresa Punto Cubano*\n\n`
+  const userHeader = `\n> 📝 *Datos del cliente*\n\n`
+  const orderHeader = `\n> 🛒 *Pedido realizado*\n\n`
+  const totalHeader = `> 💲*Total a pagar*\n\n`
+  
+  let text = mainHeader
+  text += `Hola, vengo de\n${SITE_URL}\nQuisiera realizar el siguiente encargo:\n`
+  text += userHeader
+  text += `*Nombre:* ${state.fullName}\n`
+  text += `*Email:* ${state.email}\n`
+  text += `*Teléfono:* ${state.phone}\n`
+
+  text += orderHeader
+  products.value.forEach(({ name, quantity, subtotal }) => {
+    const units = quantity > 1 ? "unidades" : "unidad"
+    text += `*${name}* \nCantidad: ${quantity} ${units}\nSubtotal: *${"`"}$${subtotal.toFixed(2)}${"`"}*\n\n`
+  })
+
+  text += totalHeader
+  text += `*${"`"}TOTAL: $${cartStore.total.toFixed(2)}${"`"}*`
+  return encodeURI(text)
+})
 const cartStore = useCartStore()
 const products = computed(() => cartStore.products)
 const selectedTab = ref(0)
@@ -63,7 +88,6 @@ const submit = async () => {
       return { id, quantity }
     }),
   }
-  // TODO save order in bd and send it to operator via whatsapp (server)
   loading.value = true
   const { data, status } = await useFetch('/api/order/create', {
     method: 'POST',
@@ -80,10 +104,14 @@ const submit = async () => {
   if (status.value === 'success') {
     visible.value = false
     notify('Su pedido ha sigo enviado correctamente', NOTIFICATION_SUCCESS)
-    // TODO go to whatsapp
-    
+    setTimeout(() => {
+      goToWhatsapp()
+    }, 2000)
   }
-  
+}
+
+const goToWhatsapp = () => {
+  window.location.href = `https://wa.me/${OPERATOR_NUMBER}?text=${whatsAppMessage.value}`
 }
 
 </script>
