@@ -6,8 +6,10 @@ import IconWhatsapp from '~/components/icons/IconWhatsapp.vue'
 import IconFacebook from '~/components/icons/IconFacebook.vue'
 import IconInstagram from '~/components/icons/IconInstagram.vue'
 
-const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, INSTAGRAM_URL } = config
 const isDarkMode = useCookie('dark')
+const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, FACEBOOK_PROFILE, INSTAGRAM_URL, INSTAGRAM_PROFILE } = config
+
+
 </script>
 
 <template>
@@ -53,8 +55,8 @@ const isDarkMode = useCookie('dark')
           <IconFacebook :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
             <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Facebook</p>
-            <a :href="`fb://${FACEBOOK_URL}`" target="_blank" class="text-blue-500 dark:text-blue-400">
-              {{ FACEBOOK_URL }}
+            <a :href="FACEBOOK_URL" target="_blank" class="text-blue-500 dark:text-blue-400">
+              {{ FACEBOOK_PROFILE }}
             </a>
           </div>
         </div>
@@ -62,8 +64,8 @@ const isDarkMode = useCookie('dark')
           <IconInstagram :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
             <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Instagram</p>
-            <a :href="`instagram://user?username=${INSTAGRAM_URL}`" target="_blank" class="text-blue-500 dark:text-blue-400">
-              {{ INSTAGRAM_URL }}
+            <a :href="INSTAGRAM_URL" target="_blank" class="text-blue-500 dark:text-blue-400">
+              {{ INSTAGRAM_PROFILE }}
             </a>
           </div>
         </div>

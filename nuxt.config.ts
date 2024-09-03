@@ -40,6 +40,6 @@ export default defineNuxtConfig({
   },
   // ssr: false,
   // routeRules: {
-  //   '/admin': { ssr: false }
+  //   '/contact': { ssr: false }
   // }
 })
