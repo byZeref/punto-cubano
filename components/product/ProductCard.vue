@@ -91,15 +91,15 @@ const handleDetailsProduct = () => {
         >
       </div>
       <div class="w-full flex flex-col px-4 lg:px-4 py-1 lg:py-2 lg:gap-[2px] relative">
-        <span class="product-name font-medium text-slate-900 dark:text-white">{{ product.name }}</span>
+        <span class="product-name text-semibold text-slate-900 dark:text-white">{{ product.name }}</span>
         <UTooltip :text="product.description" :popper="{ placement: 'top' }" :ui="tooltipUI">
           <span class="text-xs line-clamp-1">{{ product.description }}</span>
         </UTooltip>
         <AvailabilityBadge :available="product.available" />
         <div class="mt-auto flex items-center justify-between">
-          <span class="text-[var(--primary-color)] tracking-tight">
-            <span class="text-base lg:text-lg">$</span>
-            <span class="font-medium text-2xl lg:text-3xl tracking-tighter">{{ getPriceInteger(product.price) }}</span><span class="font-medium text-base lg:text-lg">.{{ getPriceDecimal(product.price) }}</span>
+          <span class="text-[var(--primary-color)]">
+            <span class="lg:text-lg text-medium">$</span>
+            <span class="text-medium text-2xl lg:text-3xl">{{ getPriceInteger(product.price) }}</span><span class="text-medium lg:text-lg">.{{ getPriceDecimal(product.price) }}</span>
           </span>
           <div class="flex gap-1 absolute right-2 bottom-2">
             <div

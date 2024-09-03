@@ -33,7 +33,7 @@ const handleConfirmOrder = () => {
       </NuxtLink>
       <div class="flex flex-col">
         <span class="text-xs text-slate-500 dark:text-slate-300">Importe total</span>
-        <span class="font-bold sm:text-lg">${{ cartStore.total.toFixed(2) }}</span>
+        <span class="text-semibold sm:text-lg">${{ cartStore.total.toFixed(2) }}</span>
       </div>
     </div>
 
@@ -64,11 +64,11 @@ const handleConfirmOrder = () => {
         </div>
         <div class="px-2 flex justify-between items-center w-full gap-2">
           <div class="flex flex-col h-full w-full">
-            <span class="product-name font-semibold text-sm text-slate-900 dark:text-white">{{ product.name }}</span>
+            <span class="product-name text-semibold text-sm text-slate-900 dark:text-white">{{ product.name }}</span>
             <div class="mt-auto flex justify-between items-center">
               <div>
                 <span class="text-xs line-clamp-1">Subtotal</span>
-                <span class="font-medium text-lg">${{ product.subtotal.toFixed(2) }}</span>
+                <span class="text-medium text-lg">${{ product.subtotal.toFixed(2) }}</span>
               </div>
               <div class="flex items-center">
                 <UButton
@@ -81,9 +81,9 @@ const handleConfirmOrder = () => {
                 <UButton
                   color="white"
                   variant="ghost"
-                  class="px-3 text-slate-900 dark:text-slate-100 font-medium hover:bg-transparent"
+                  class="px-3 text-slate-900 dark:text-slate-100 hover:bg-transparent"
                 >
-                  <span class="font-semibold">{{ product.quantity }}</span>
+                  <span class="text-semibold">{{ product.quantity }}</span>
                 </UButton>
                 <UButton
                   icon="i-heroicons-plus"
@@ -107,7 +107,7 @@ const handleConfirmOrder = () => {
 <style scoped>
 .router-link-active {
   color: var(--text-color) !important;
-  font-weight: normal !important;
+  font-family: "Montserrat" !important;
 }
 
 </style>

@@ -44,7 +44,7 @@ const togglePasswordType = () => {
         <img class="logo-img w-[160px] h-auto" src="/logo.png" alt="logo-app">
       </div>
       <div class="w-full px-2">
-        <h3 class="text-center text-slate-800 dark:text-white text-lg leading-[24px] ">
+        <h3 class="text-center text-medium text-slate-800 dark:text-white text-lg leading-[24px] ">
           Ingrese sus credenciales para iniciar sesión
         </h3>
       </div>

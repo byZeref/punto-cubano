@@ -59,7 +59,7 @@ const remove = async () => {
     :prevent-close="loading"
   >
     <template #header>
-      <h4 class="text-[var(--error-color)] font-medium text-lg">Confirmación</h4>
+      <h4 class="text-[var(--error-color)] text-medium text-lg">Confirmación</h4>
     </template>
     <template #body>
       <span class="text-slate-700 dark:text-slate-200">Seguro que desea eliminar el producto <strong>{{ entity.name }}</strong>?</span>

@@ -147,7 +147,7 @@ onMounted(() => {
     @update:show="(val) => visible = val" 
   >
     <template #header>
-      <h4 class="text-slate-900 dark:text-slate-300 font-medium text-xl">
+      <h4 class="text-slate-900 dark:text-slate-300 text-medium text-xl">
         {{ entity ? 'Editar producto' : 'Nuevo producto' }}
       </h4>
     </template>

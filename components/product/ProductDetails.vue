@@ -52,11 +52,11 @@ const handleAddToCart = () => {
       </div>
       <div class="description mt-4 text-slate-900 dark:text-slate-100">
         <div class="flex items-center gap-2">
-          <h6 class="text-xl font-bold">{{ entity.name }}</h6>
+          <h6 class="text-xl text-semibold">{{ entity.name }}</h6>
           <AvailabilityBadge :available="entity.available" />
         </div>
         <p class="text-sm my-1 sm:my-2 leading-4">{{ entity.description }}</p>
-        <p class="font-semibold">${{ entity.price.toFixed(2) }}</p>
+        <p class="text-semibold">${{ entity.price.toFixed(2) }}</p>
       </div>
       <div class="actions flex justify-between sm:justify-end gap-4 my-4">
         <UButtonGroup size="xl" orientation="horizontal">
@@ -73,7 +73,7 @@ const handleAddToCart = () => {
             :disabled="!entity.available"
             color="white"
             variant="soft"
-            class="px-7 text-slate-900 dark:text-slate-100 font-medium"
+            class="px-7 text-slate-900 dark:text-slate-100 text-medium"
           >
             {{ quantity }}
           </UButton>
@@ -96,7 +96,9 @@ const handleAddToCart = () => {
           variant="solid"
           :label="`Agregar por $${amount}`"
           @click="handleAddToCart"
-        />
+        >
+          <span class="text-semibold">{{ `Agregar por $${amount}` }}</span>
+        </UButton>
       </div>
     </template>
   </BaseDialog>

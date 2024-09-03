@@ -126,7 +126,7 @@ const goToWhatsapp = () => {
     @update:show="(val) => visible = val" 
   >
     <template #header>
-      <h4 class="text-slate-900 dark:text-slate-300 font-medium text-xl">
+      <h4 class="text-slate-900 dark:text-slate-300 text-medium text-xl">
         Confirmación de pedido
       </h4>
     </template>
@@ -143,10 +143,13 @@ const goToWhatsapp = () => {
                 icon="i-heroicons-information-circle"
                 color="teal"
                 variant="soft"
-                title="Importante!"
                 description="Esta información solo se usará para contactar con usted y mantenerlo al tanto del estado en el que se encuentra su pedido."
                 class="mb-2"
-              />
+              >
+                <template #title>
+                  <span class="text-semibold">Importante!</span>
+                </template>
+              </UAlert>
   
               <UForm
                 ref="form"
@@ -158,7 +161,7 @@ const goToWhatsapp = () => {
               >
                 <UFormGroup name="fullName" class="relative">
                   <template #label>
-                    <span>Nombre y apellidos<span class="text-red-600 dark:text-red-400">*</span></span>
+                    <span class="text-medium">Nombre y apellidos<span class="text-red-600 dark:text-red-400">*</span></span>
                   </template>
                   <template #default="{ error }">
                     <UInput
@@ -177,7 +180,7 @@ const goToWhatsapp = () => {
   
                 <UFormGroup name="phone" class="relative">
                   <template #label>
-                    <span>Teléfono<span class="text-red-600 dark:text-red-400">*</span></span>
+                    <span class="text-medium">Teléfono<span class="text-red-600 dark:text-red-400">*</span></span>
                   </template>
                   <template #default="{ error }">
                     <UInput
@@ -196,7 +199,7 @@ const goToWhatsapp = () => {
   
                 <UFormGroup name="email" class="relative">
                   <template #label>
-                    <span>Correo electrónico<span class="text-red-600 dark:text-red-400">*</span></span>
+                    <span class="text-medium">Correo electrónico<span class="text-red-600 dark:text-red-400">*</span></span>
                   </template>
                   <template #default="{ error }">
                     <UInput
@@ -224,7 +227,7 @@ const goToWhatsapp = () => {
                     size="lg" 
                     :disabled="loading"
                   >
-                    <span class="text-center">Cancelar</span>
+                    <span class="text-center text-medium">Cancelar</span>
                   </UButton>
                   <UButton
                     @click="handleFormValidation"
@@ -232,7 +235,7 @@ const goToWhatsapp = () => {
                     size="lg"
                     :disabled="loading"
                   >
-                    <span class="text-center mx-auto">Siguiente</span>
+                    <span class="text-center text-medium mx-auto">Siguiente</span>
                   </UButton>
                 </div>
               </UForm>
@@ -246,7 +249,7 @@ const goToWhatsapp = () => {
 
                 <ul class="flex flex-col gap-3 mb-3">
                   <li v-for="prod in products" :key="prod.id">
-                    <p class="font-semibold text-blue-500">{{ prod.name }}</p>
+                    <p class="text-semibold text-blue-500">{{ prod.name }}</p>
                     <p class="text-sm">Cantidad: {{ prod.quantity }}</p>
                     <p class="text-sm">Subtotal: ${{ prod.subtotal.toFixed(2) }}</p>
                   </li>
@@ -260,7 +263,7 @@ const goToWhatsapp = () => {
                   class="mb-5 mt-auto"
                 >
                   <template #description>
-                    <span class="text-lg font-bold">${{ cartStore.total.toFixed(2) }}</span>
+                    <span class="text-lg text-semibold">${{ cartStore.total.toFixed(2) }}</span>
                   </template>
                 </UAlert>
 
@@ -268,10 +271,13 @@ const goToWhatsapp = () => {
                   icon="i-heroicons-information-circle"
                   color="teal"
                   variant="soft"
-                  title="Atención!"
                   description="Se enviará su pedido y se le comunicará con el operador vía WhatsApp."
                   class="mb-5 mt-auto"
-                />
+                >
+                  <template #title>
+                    <span class="text-semibold">Atención!</span>
+                  </template>
+                </UAlert>
 
                 <UDivider />
 
@@ -283,7 +289,7 @@ const goToWhatsapp = () => {
                     size="lg" 
                     :disabled="loading"
                   >
-                    <span class="text-center">Cancelar</span>
+                    <span class="text-center text-medium">Cancelar</span>
                   </UButton>
                   <UButton
                     @click="submit"
@@ -295,7 +301,7 @@ const goToWhatsapp = () => {
                     <IconSpinner v-if="loading" size="24" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
                     <div v-else class="flex items-center justify-center gap-1">
                       <IconWhatsapp :color="isDarkMode ? 'black' : '#fff'" />
-                      <span class="text-center">Enviar y contactar operador</span>
+                      <span class="text-center text-medium">Enviar y contactar operador</span>
                     </div>
                   </UButton>
                 </div>

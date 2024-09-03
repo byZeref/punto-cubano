@@ -20,14 +20,14 @@ const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, FACEBOOK_PROFILE, INSTAGR
         <div class="description--row flex items-center gap-3 mb-4">
           <IconCertificate :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
-            <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Nombre de la empresa</p>
+            <p class="text-slate-700 dark:text-slate-300 text-semibold leading-4">Nombre de la empresa</p>
             <p class="text-slate-700 dark:text-slate-300">Punto Cubano</p>
           </div>
         </div>
         <div class="description--row flex items-center gap-3 mb-4">
           <IconMail :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
-            <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Correo electrónico</p>
+            <p class="text-slate-700 dark:text-slate-300 text-semibold leading-4">Correo electrónico</p>
             <a :href="`mailto:${OPERATOR_EMAIL}`" target="_blank" class="text-blue-500 dark:text-blue-400">
               {{ OPERATOR_EMAIL }}
             </a>
@@ -36,7 +36,7 @@ const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, FACEBOOK_PROFILE, INSTAGR
         <div class="description--row flex items-center gap-3 mb-4">
           <IconPhone :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
-            <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Teléfono</p>
+            <p class="text-slate-700 dark:text-slate-300 text-semibold leading-4">Teléfono</p>
             <a :href="`tel:${OPERATOR_NUMBER}`" target="_blank" class="text-blue-500 dark:text-blue-400">
               {{ OPERATOR_NUMBER }}
             </a>
@@ -45,7 +45,7 @@ const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, FACEBOOK_PROFILE, INSTAGR
         <div class="description--row flex items-center gap-3 mb-4">
           <IconWhatsapp :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
-            <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">WhatsApp</p>
+            <p class="text-slate-700 dark:text-slate-300 text-semibold leading-4">WhatsApp</p>
             <a :href="`https://wa.me/${OPERATOR_NUMBER}`" target="_blank" class="text-blue-500 dark:text-blue-400">
               {{ OPERATOR_NUMBER }}
             </a>
@@ -54,7 +54,7 @@ const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, FACEBOOK_PROFILE, INSTAGR
         <div class="description--row flex items-center gap-3 mb-4">
           <IconFacebook :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
-            <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Facebook</p>
+            <p class="text-slate-700 dark:text-slate-300 text-semibold leading-4">Facebook</p>
             <a :href="FACEBOOK_URL" target="_blank" class="text-blue-500 dark:text-blue-400">
               {{ FACEBOOK_PROFILE }}
             </a>
@@ -63,7 +63,7 @@ const { OPERATOR_NUMBER, OPERATOR_EMAIL, FACEBOOK_URL, FACEBOOK_PROFILE, INSTAGR
         <div class="description--row flex items-center gap-3 mb-4">
           <IconInstagram :color="isDarkMode ? 'white' : 'black'" size="32" />
           <div>
-            <p class="text-slate-700 dark:text-slate-300 font-bold leading-4">Instagram</p>
+            <p class="text-slate-700 dark:text-slate-300 text-semibold leading-4">Instagram</p>
             <a :href="INSTAGRAM_URL" target="_blank" class="text-blue-500 dark:text-blue-400">
               {{ INSTAGRAM_PROFILE }}
             </a>

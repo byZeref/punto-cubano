@@ -40,7 +40,7 @@ watch(() => props.productsCount, (val) => {
           { animated: isBadgeAnimated, isZero: productsCount === 0 },
         ]"
       >
-        <span class="text-xs font-medium tracking-tight text-white dark:text-black">{{ productsCount }}</span>
+        <span class="text-xs text-medium tracking-tight text-white dark:text-black">{{ productsCount }}</span>
       </div>
     </NuxtLink>
   </div>

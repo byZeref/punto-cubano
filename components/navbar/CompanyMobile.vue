@@ -19,7 +19,7 @@ const props = defineProps({
     <NuxtLink to="/" class="logo-name flex items-center gap-1">
       <img v-show="isDarkMode" class="logo-img w-[50px] h-auto" src="/logo-white.png" alt="logo-app">
       <img v-show="!isDarkMode" class="logo-img w-[50px] h-auto" src="/logo.png" alt="logo-app">
-      <span class="font-bold text-[18px]">Punto Cubano</span>
+      <span class="text-semibold text-[18px]">Punto Cubano</span>
     </NuxtLink>
   </div>
 </template>

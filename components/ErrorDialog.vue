@@ -21,7 +21,7 @@ watchEffect(() => {
 <template>
   <BaseDialog v-if="visible" :show="visible" @update:show="(val) => visible = val">
     <template #header>
-      <h4 class="text-[var(--error-color)] font-semibold text-xl">Error!</h4>
+      <h4 class="text-[var(--error-color)] text-semibold text-xl">Error!</h4>
     </template>
     <template #body>
       <div class="flex items-center gap-1 text-slate-700 dark:text-slate-200">
