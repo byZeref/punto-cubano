@@ -1,3 +1,5 @@
+@import "./fonts.css";
+
 :root {
   --primary-color: #7f2c30;
   --primary-color-soft: #4c1b1e;
@@ -31,6 +33,14 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 
+    Montserrat,
+    -apple-system,
+    "Segoe UI",
+    "Noto Sans",
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
 html, .navbar {
@@ -46,7 +56,7 @@ html, .navbar {
 
   &-active {
     color: var(--primary-color) !important;
-    font-weight: bold;
+    font-weight: 500;
   }
 }
 

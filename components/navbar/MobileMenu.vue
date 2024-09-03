@@ -63,30 +63,30 @@ const getColor = (iconRoute) => {
         @click="opened = false"
       />
       <CompanyMobile :is-open="isOpen" :is-dark-mode="isDarkMode" @click="opened = false" />
-      <div class="px-4 pt-12 flex flex-col gap-7">
+      <div class="px-4 pt-8 flex flex-col gap-4">
         <NuxtLink class="flex items-center gap-2" to="/" @click="opened = false">
           <IconHome :color="getColor('/')" />
-          <span class="text-lg">Inicio</span>
+          <span class="">Inicio</span>
         </NuxtLink>
         <NuxtLink class="flex items-center gap-2" to="/products" @click="opened = false">
           <IconShoppingBag :color="getColor('/products')" />
-          <span class="text-lg">Productos</span>
+          <span class="">Productos</span>
         </NuxtLink>
         <NuxtLink v-if="!isLogged" class="flex items-center gap-2" to="/cart" @click="opened = false">
           <IconShoppingCart :color="getColor('/cart')" />
-          <span class="text-lg">Carrito</span>
+          <span class="">Carrito</span>
         </NuxtLink>
         <NuxtLink v-if="!isLogged" class="flex items-center gap-2" to="/contact" @click="opened = false">
           <IconContactUs :color="getColor('/contact')" />
-          <span class="text-lg">Contacténos</span>
+          <span class="">Contacténos</span>
         </NuxtLink>
         <NuxtLink class="flex items-center gap-2" to="/admin" @click="opened = false">
           <IconOrders :color="getColor('/admin')" />
-          <span class="text-lg">Pedidos</span>
+          <span class="">Pedidos</span>
         </NuxtLink>
         <NuxtLink v-if="isLogged" class="flex items-center gap-2" @click="logout">
           <IconLogout :color="isDarkMode ? '#fff' : 'black'" />
-          <span class="text-lg">Cerrar Sesión</span>
+          <span class="">Cerrar Sesión</span>
         </NuxtLink>
       </div>
       <div v-if="user" class="user-info">
