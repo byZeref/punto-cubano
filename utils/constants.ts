@@ -39,3 +39,20 @@ export const order_status = {
   ORDER_DELIVERED: 'delivered',
   ORDER_CANCELLED: 'cancelled',
 }
+
+export const order_status_labels = {
+  pending: 'Pendiente',
+  sent: 'Enviado',
+  delivered: 'Entregado',
+  cancelled: 'Cancelado',
+}
+
+export const DATE_TIME_BASE_FORMAT = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  // second: '2-digit',
+  // timeZoneName: 'short'
+}

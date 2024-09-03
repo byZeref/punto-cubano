@@ -78,7 +78,7 @@ const remove = async () => {
           @click="visible = false"
           :disabled="loading"
         >
-          <span class="text-center">Cancelar</span>
+          <span class="text-center text-medium">Cancelar</span>
         </UButton>
         <UButton
           color="red"
@@ -88,7 +88,7 @@ const remove = async () => {
           :disabled="loading"
         >
           <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
-          <span v-else class="text-center mx-auto">Eliminar</span>
+          <span v-else class="text-center text-medium mx-auto">Eliminar</span>
         </UButton>
       </div>
     </template>

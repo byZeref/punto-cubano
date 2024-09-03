@@ -155,7 +155,7 @@ onMounted(() => {
       <UForm :validate="validate" :state="state" class="space-y-5" @submit="submit" @error="onError">
         <UFormGroup name="name" class="relative">
           <template #label>
-            <span>Nombre<span class="text-red-600 dark:text-red-400">*</span></span>
+            <span class="text-medium">Nombre<span class="text-red-600 dark:text-red-400">*</span></span>
           </template>
           <template #default="{ error }">
             <UInput
@@ -174,7 +174,7 @@ onMounted(() => {
 
         <UFormGroup name="description" class="relative">
           <template #label>
-            <span>Descripción<span class="text-red-600 dark:text-red-400">*</span></span>
+            <span class="text-medium">Descripción<span class="text-red-600 dark:text-red-400">*</span></span>
           </template>
           <template #default="{ error }">
             <UTextarea
@@ -197,7 +197,7 @@ onMounted(() => {
 
         <UFormGroup name="price" class="relative">
           <template #label>
-            <span>Precio<span class="text-red-600 dark:text-red-400">*</span></span>
+            <span class="text-medium">Precio<span class="text-red-600 dark:text-red-400">*</span></span>
           </template>
           <template #default="{ error }">
             <UInput
@@ -216,7 +216,7 @@ onMounted(() => {
         
         <UFormGroup name="category" class="relative">
           <template #label>
-            <span>Categoría<span class="text-red-600 dark:text-red-400">*</span></span>
+            <span class="text-medium">Categoría<span class="text-red-600 dark:text-red-400">*</span></span>
           </template>
           <USelectMenu
             v-model="state.category"
@@ -233,7 +233,7 @@ onMounted(() => {
 
         <UFormGroup name="image">
           <template #label>
-            <span>Imagen</span>
+            <span class="text-medium">Imagen</span>
           </template>
           <UInput
             type="file"
@@ -254,7 +254,7 @@ onMounted(() => {
         <div class="flex items-end">
           <UFormGroup name="available">
             <template #label>
-              <span>Disponible</span>
+              <span class="text-medium">Disponible</span>
             </template>
             <UToggle
               v-model="state.available"
@@ -283,7 +283,7 @@ onMounted(() => {
             @click="visible = false"
             :disabled="loading"
           >
-            <span class="text-center">Cancelar</span>
+            <span class="text-center text-medium">Cancelar</span>
           </UButton>
           <UButton
             type="submit"
@@ -293,7 +293,7 @@ onMounted(() => {
             :disabled="loading"
             >
             <IconSpinner v-if="loading" :color="isDarkMode ? 'black' : '#fff'" class="text-center mx-auto" />
-            <span v-else class="text-center mx-auto">Guardar</span>
+            <span v-else class="text-center text-medium mx-auto">Guardar</span>
           </UButton>
         </div>
 
