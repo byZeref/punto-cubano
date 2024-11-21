@@ -1,10 +1,10 @@
-// @ts-expect-error --> Supabase is not a module, nuxt said
-import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event)
+  const { supabase } = await useSupabase(event)
 
-  const { data: orders, error, status } = await client.from('orders').select()
+  const { data: orders, error, status } = await supabase
+    .from('orders')
+    .select()
 
   console.log(orders)
 

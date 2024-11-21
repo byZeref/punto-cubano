@@ -48,4 +48,5 @@ export interface OrderProduct {
   order: number,
   product: number,
   quantity: number,
+  products: Product
 }

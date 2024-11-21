@@ -27,15 +27,18 @@ const { data: orders, error, status, refresh } = await useFetch('/api/order/all'
 console.log('orders', orders)
 console.log('error', error)
 
+const target = ref()
 const showOrderProducts = ref(false)
 const handleShowOrderProducts = (order) => {
   console.log('show order products', order);
+  target.value = order
   showOrderProducts.value = true
 }
 
 const showOrderStatus = ref(false)
 const handleUpdateOrderStatus = (order) => {
   console.log('update order status', order);
+  target.value = order
   showOrderStatus.value = true
 }
 
@@ -46,14 +49,22 @@ const handleUpdateOrderStatus = (order) => {
     v-if="showOrderProducts"
     :show="showOrderProducts"
     :is-dark-mode="isDarkMode"
-    @update:show="(val) => showOrderProducts = val"
+    :entity="target"
+    @update:show="(val) => {
+      showOrderProducts = val
+      if (!val) target = undefined
+    }"
     @refresh="refresh"
   />
   <OrderStatus
     v-if="showOrderStatus"
     :show="showOrderStatus"
     :is-dark-mode="isDarkMode"
-    @update:show="(val) => showOrderStatus = val"
+    :entity="target"
+    @update:show="(val) => {
+      showOrderStatus = val
+      if (!val) target = undefined
+    }"
     @refresh="refresh"
   />
 
