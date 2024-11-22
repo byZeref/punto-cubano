@@ -47,6 +47,13 @@ export const order_status_labels = {
   cancelled: 'Cancelado',
 }
 
+export const order_status_options = [
+  { value: 'pending', label:  'Pendiente' },
+  { value: 'sent', label:  'Enviado' },
+  { value: 'delivered', label:  'Entregado' },
+  { value: 'cancelled', label:  'Cancelado' },
+]
+
 export const DATE_TIME_BASE_FORMAT = {
   year: 'numeric',
   month: 'long',

@@ -2,7 +2,7 @@
 import IconCheckList from '@/components/icons/IconCheckList.vue'
 
 const { BTN_PRIMARY } = buttons_ui
-const emit = defineEmits(['update:show', 'refresh', 'mounted'])
+const emit = defineEmits(['update:show', 'mounted'])
 const props = defineProps({
   show: {
     type: Boolean,
@@ -45,7 +45,7 @@ onMounted(() => emit('mounted'))
   >
     <template #header>
       <h4 class="text-slate-900 dark:text-slate-300 text-medium text-xl">
-        Productos del pedido {{ entity.id }}
+        Productos del pedido
       </h4>
     </template>
     <template #body>

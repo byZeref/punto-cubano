@@ -42,7 +42,6 @@ const handleUpdateOrderStatus = (order) => {
   console.log('update order status', order);
   target.value = order
   showOrderStatus.value = true
-  loadingModal.value = true
 }
 
 </script>
@@ -59,7 +58,6 @@ const handleUpdateOrderStatus = (order) => {
       showOrderProducts = val
       if (!val) target = undefined
     }"
-    @refresh="refresh"
   />
   <OrderStatus
     v-if="showOrderStatus"
