@@ -2,7 +2,7 @@
 import IconCheckList from '@/components/icons/IconCheckList.vue'
 
 const { BTN_PRIMARY } = buttons_ui
-const emit = defineEmits(['update:show', 'refresh'])
+const emit = defineEmits(['update:show', 'refresh', 'mounted'])
 const props = defineProps({
   show: {
     type: Boolean,
@@ -32,6 +32,7 @@ const { data: products } = await useFetch(`/api/order/${props.entity.id}`, {
 console.log('order products', products);
 
 
+onMounted(() => emit('mounted'))
 </script>
 
 <template>
