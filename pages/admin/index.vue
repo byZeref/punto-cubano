@@ -31,7 +31,6 @@ const target = ref()
 const showOrderProducts = ref(false)
 const loadingModal = ref(false)
 const handleShowOrderProducts = (order) => {
-  console.log('show order products', order);
   target.value = order
   showOrderProducts.value = true
   loadingModal.value = true
@@ -39,7 +38,6 @@ const handleShowOrderProducts = (order) => {
 
 const showOrderStatus = ref(false)
 const handleUpdateOrderStatus = (order) => {
-  console.log('update order status', order);
   target.value = order
   showOrderStatus.value = true
 }
