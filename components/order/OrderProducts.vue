@@ -1,4 +1,7 @@
 <script setup>
+import IconCheckList from '@/components/icons/IconCheckList.vue'
+
+const { BTN_PRIMARY } = buttons_ui
 const emit = defineEmits(['update:show', 'refresh'])
 const props = defineProps({
   show: {
@@ -36,7 +39,6 @@ console.log('order products', products);
     v-if="visible"
     :show="visible"
     :prevent-close="loading"
-    :footer="false"
     is-2xl
     @update:show="(val) => visible = val" 
   >
@@ -65,14 +67,21 @@ console.log('order products', products);
             >
           </div>
         </div>
-
-        
-
-        <div class="mt-4">
-          <p class="text-medium">Impote total</p>
-          <div class="w-full h-[1px] mb-2 bg-slate-300"></div>
-          <p class="text-[36px] leading-[40px] text-medium">${{ totalAmount.toFixed(2) }}</p>
+        <div class="mt-4 flex items-center gap-1">
+          <IconCheckList color="#000" size="40" />
+          <div>
+            <p class="text-medium text-sm">Impote total</p>
+            <p class="text-[36px] leading-[40px] text-medium">${{ totalAmount.toFixed(2) }}</p>
+          </div>
         </div>
+
+      </div>
+    </template>
+    <template #footer>
+      <div class="flex">
+        <UButton class="ml-auto" color="primary" size="lg" :ui="BTN_PRIMARY" @click="visible = false">
+          <span class="text-center">Cerrar</span>
+        </UButton>
       </div>
     </template>
   </BaseDialog>
