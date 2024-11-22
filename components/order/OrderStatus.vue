@@ -1,5 +1,9 @@
 <script setup>
 import IconSpinner from '~/components/icons/IconSpinner.vue'
+import IconOrderPending from '~/components/icons/IconOrderPending.vue'
+import IconOrderSent from '~/components/icons/IconOrderSent.vue'
+import IconOrderDelivered from '~/components/icons/IconOrderDelivered.vue'
+import IconOrderCancelled from '~/components/icons/IconOrderCancelled.vue'
 import { order_status, order_status_options as options } from '~/utils/constants'
 const { ORDER_PENDING, ORDER_SENT, ORDER_DELIVERED, ORDER_CANCELLED } = order_status
 const { BTN_PRIMARY } = buttons_ui
@@ -59,6 +63,21 @@ const submit = async () => {
   }
 }
 
+const getIconColor = (targetStatus) => {
+  if (status.value !== targetStatus) return props.isDarkMode ? '#e2e8f0' : '#475569'
+
+  switch (targetStatus) {
+    case ORDER_PENDING:
+      return props.isDarkMode ? '#cbd5e1' : '#334155'
+    case ORDER_SENT:
+      return props.isDarkMode ? '#93c5fd' : '#1d4ed8'
+    case ORDER_DELIVERED:
+      return props.isDarkMode ? '#6ee7b7' : '#047857'
+    case ORDER_CANCELLED:
+      return props.isDarkMode ? '#fca5a5' : '#b91c1c'
+  }
+}
+
 </script>
 
 <template>
@@ -79,7 +98,7 @@ const submit = async () => {
       <div class="statuses-container pb-2">
         <div 
           v-for="item in options" :key="item.value" 
-          :class="['status-item text-slate-600 dark:text-slate-200 border border-slate-400 rounded-md py-2 px-4 w-full user-select-none cursor-pointer',
+          :class="['status-item flex items-center gap-1 text-slate-600 dark:text-slate-200 border border-slate-400 rounded-md py-2 px-4 w-full user-select-none cursor-pointer',
             { 'selected': status === item.value },
             { 'pending': item.value === ORDER_PENDING },
             { 'sent': item.value === ORDER_SENT },
@@ -88,6 +107,10 @@ const submit = async () => {
           ]"
           @click="status = item.value"
         >
+          <IconOrderPending v-if="item.value === ORDER_PENDING" :color="getIconColor(item.value)" size="18" />
+          <IconOrderSent v-if="item.value === ORDER_SENT" :color="getIconColor(item.value)" size="20" />
+          <IconOrderDelivered v-if="item.value === ORDER_DELIVERED" :color="getIconColor(item.value)" size="18" />
+          <IconOrderCancelled v-if="item.value === ORDER_CANCELLED" :color="getIconColor(item.value)" size="18" />
           <span>{{ item.label }}</span>
         </div>
       </div>
