@@ -7,12 +7,15 @@ const sort = ref({
   column: 'created_at',
   direction: 'desc'
 })
+const page = ref(1)
+const pageSize = ref(5)
 const { filters, updateInputFilter } = useFilters()
+const params = computed(() => ({ page: page.value, pageSize: pageSize.value, ...filters.value }))
 provide('filters', filters)
 
-const { data: orders, error, status, refresh } = await useFetch('/api/order/all', {
+const { data, error, status, refresh } = await useFetch('/api/order/all', {
   method: 'GET',
-  params: filters,
+  params,
   onRequestError({ request, response, options }) {
     notify(ERR_INTERNET_CONNECTION, NOTIFICATION_ERROR)
   },
@@ -20,9 +23,7 @@ const { data: orders, error, status, refresh } = await useFetch('/api/order/all'
     notify(response._data.message, NOTIFICATION_ERROR)
   },
 })
-console.log('orders', orders)
-console.log('error', error)
-
+const [orders, totalOrders] = [computed(() => data.value.orders), computed(() => data.value.total)]
 const loadingOrders = computed(() => status.value === 'pending')
 
 const target = ref()
@@ -75,8 +76,12 @@ const handleUpdateOrderStatus = (order) => {
         <Filters :update-input-filter="updateInputFilter" />
       </template>
 
-      <UTable :columns="ORDER_TABLE_COLUMNS" :rows="orders" :sort="sort" :loading="loadingOrders" >
-        <!-- Header row -->
+      <UTable
+        :columns="ORDER_TABLE_COLUMNS"
+        :rows="orders"
+        :sort="sort"
+        :loading="loadingOrders"
+      >
         <template #actions-header="{ column }">
           <span class="text-medium text-[#7f2c30] dark:text-white">{{ column.label }}</span>
         </template>
@@ -96,7 +101,6 @@ const handleUpdateOrderStatus = (order) => {
           <span class="text-medium text-center text-[#7f2c30] dark:text-white">{{ column.label }}</span>
         </template>
   
-        <!-- Data rows -->
         <template #actions-data="{ row }">
           <div class="flex gap-1">
             <UTooltip text="Ver productos del pedido" :popper="{ placement: 'top' }">
@@ -131,8 +135,20 @@ const handleUpdateOrderStatus = (order) => {
           </span>
         </template>
       </UTable>
+
     </UCard>
 
+    <div class="w-full flex items-center justify-end gap-4 mt-4">
+      <span class="text-slate-700 dark:text-slate-400">Total: {{ totalOrders }}</span>
+      <UPagination
+        v-model="page"
+        :page-count="pageSize"
+        :total="totalOrders"
+        :active-button="{ color: 'sky' }"
+        :inactive-button="{ color: 'gray' }"
+        size="lg"
+      />
+    </div>
 
   </section>
 </template>
