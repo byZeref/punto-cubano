@@ -23,7 +23,8 @@ const { data: orders, error, status, refresh } = await useFetch('/api/order/all'
 console.log('orders', orders)
 console.log('error', error)
 
-const isLoading = computed(() => status.value === 'pending')
+const loadingOrders = computed(() => status.value === 'pending')
+
 const target = ref()
 const showOrderProducts = ref(false)
 const loadingModal = ref(false)
@@ -42,7 +43,7 @@ const handleUpdateOrderStatus = (order) => {
 </script>
 
 <template>
-  <Loading v-if="loadingModal" />
+  <Loading v-if="loadingModal || loadingOrders" />
   <OrderProducts
     v-if="showOrderProducts"
     :show="showOrderProducts"
@@ -74,7 +75,7 @@ const handleUpdateOrderStatus = (order) => {
         <Filters :update-input-filter="updateInputFilter" />
       </template>
 
-      <UTable :columns="ORDER_TABLE_COLUMNS" :rows="orders" :sort="sort" :loading="isLoading" >
+      <UTable :columns="ORDER_TABLE_COLUMNS" :rows="orders" :sort="sort" :loading="loadingOrders" >
         <!-- Header row -->
         <template #actions-header="{ column }">
           <span class="text-medium text-[#7f2c30] dark:text-white">{{ column.label }}</span>
