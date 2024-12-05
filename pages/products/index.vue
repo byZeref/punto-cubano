@@ -93,7 +93,12 @@ const handleGoToCart = () => {
 <style scoped>
 .products-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
   gap: 1rem;
+
+  @media (width < 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(356px, 1fr));
+    gap: 10px;
+  }
 }
 </style>
