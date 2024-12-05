@@ -50,3 +50,5 @@ export interface OrderProduct {
   quantity: number,
   products?: Product
 }
+
+export type FilterType = 'status' | 'name' | 'email' | 'phone'

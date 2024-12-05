@@ -54,6 +54,15 @@ export const order_status_options = [
   { value: 'cancelled', label:  'Cancelado' },
 ]
 
+export const ORDER_TABLE_COLUMNS = [
+  { key: 'actions', label: 'Acciones', sortable: false, },
+  { key: 'status', label: 'Estado', sortable: true, },
+  { key: 'created_at', label: 'Fecha y hora', sortable: true, },
+  { key: 'username', label: 'Nombre y apellidos', sortable: true, },
+  { key: 'email', label: 'Correo electrónico', sortable: true, },
+  { key: 'phone', label: 'Teléfono', sortable: true, },
+]
+
 export const DATE_TIME_BASE_FORMAT = {
   year: 'numeric',
   month: 'long',

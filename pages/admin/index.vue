@@ -3,25 +3,12 @@ const { ERR_INTERNET_CONNECTION } = errorMessages
 const { NOTIFICATION_ERROR } = notificationTypes
 const { ORDER_PENDING, ORDER_SENT, ORDER_DELIVERED, ORDER_CANCELLED } = order_status
 const isDarkMode = useCookie('dark')
-const columns = [
-  { key: 'actions', label: 'Acciones', sortable: false, },
-  { key: 'status', label: 'Estado', sortable: true, },
-  { key: 'created_at', label: 'Fecha y hora', sortable: true, },
-  { key: 'username', label: 'Nombre y apellidos', sortable: true, },
-  { key: 'email', label: 'Correo electrónico', sortable: true, },
-  { key: 'phone', label: 'Teléfono', sortable: true, },
-]
 const sort = ref({
   column: 'created_at',
   direction: 'desc'
 })
-const filters = ref({
-  status: 'all',
-  name: '',
-  email: '',
-  phone: '',
-})
-const STATUS_OPTIONS = [{value: 'all', label: 'Todos'}, ...order_status_options]
+const { filters, updateInputFilter } = useFilters()
+provide('filters', filters)
 
 const { data: orders, error, status, refresh } = await useFetch('/api/order/all', {
   method: 'GET',
@@ -37,17 +24,6 @@ console.log('orders', orders)
 console.log('error', error)
 
 const isLoading = computed(() => status.value === 'pending')
-const timeout = ref()
-const handleChangeInputFilter = (type, e) => {
-  const val = e.target.value
-  clearTimeout(timeout.value)
-  timeout.value = setTimeout(() => {
-    if (type === 'name') filters.value.name = val
-    else if (type === 'email') filters.value.email = val
-    else if (type === 'phone') filters.value.phone = val
-  }, 1000)
-}
-
 const target = ref()
 const showOrderProducts = ref(false)
 const loadingModal = ref(false)
@@ -95,62 +71,10 @@ const handleUpdateOrderStatus = (order) => {
 
     <UCard>
       <template #header>
-        <div class="flex flex-col md:flex-row md:items-center gap-2">
-          <UFormGroup class="w-full md:w-[180px]">
-            <template #label>
-              <span class="text-medium">Estado del producto</span>
-            </template>
-            <USelectMenu
-              v-model="filters.status"
-              :options="STATUS_OPTIONS"
-              value-attribute="value"
-              option-attribute="label"
-              placeholder="Estado del pedido"
-              size="md"
-              color="sky"
-              :ui="{ size: 'text-md' }"
-            />
-          </UFormGroup>
-          <UFormGroup class="w-full md:w-[180px]">
-            <template #label>
-              <span class="text-medium">Nombre y apellidos</span>
-            </template>
-            <UInput
-              placeholder="Nombre"
-              color="sky"
-              size="md"
-              :ui="{ size: 'text-md' }"
-              @input="(e) => handleChangeInputFilter('name', e)"
-            />
-          </UFormGroup>
-          <UFormGroup class="w-full md:w-[180px]">
-            <template #label>
-              <span class="text-medium">Email</span>
-            </template>
-            <UInput
-              placeholder="Email"
-              color="sky"
-              size="md"
-              :ui="{ size: 'text-md' }"
-              @input="(e) => handleChangeInputFilter('email', e)"
-            />
-          </UFormGroup>
-          <UFormGroup class="w-full md:w-[180px]">
-            <template #label>
-              <span class="text-medium">Teléfono</span>
-            </template>
-            <UInput
-              placeholder="Teléfono"
-              color="sky"
-              size="md"
-              :ui="{ size: 'text-md' }"
-              @input="(e) => handleChangeInputFilter('phone', e)"
-            />
-          </UFormGroup>
-        </div>
+        <Filters :update-input-filter="updateInputFilter" />
       </template>
 
-      <UTable :columns="columns" :rows="orders" :sort="sort" :loading="isLoading" >
+      <UTable :columns="ORDER_TABLE_COLUMNS" :rows="orders" :sort="sort" :loading="isLoading" >
         <!-- Header row -->
         <template #actions-header="{ column }">
           <span class="text-medium text-[#7f2c30] dark:text-white">{{ column.label }}</span>
