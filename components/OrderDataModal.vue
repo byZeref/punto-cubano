@@ -33,10 +33,10 @@ const whatsAppMessage = computed(() => {
 const cartStore = useCartStore()
 const products = computed(() => cartStore.products)
 const selectedTab = ref(0)
-const tabs = [
+const tabs = ref([
   { label: 'Datos de contacto', key: 'form' },
   { label: 'Pedido', key: 'order' },
-]
+])
 const emit = defineEmits(['update:show'])
 const props = defineProps({
   show: {
@@ -75,7 +75,9 @@ const handleFormValidation = async () => {
   await form.value.validate()
     .then(() => selectedTab.value = 1)
     .catch(() => selectedTab.value = 0)
-
+}
+const handleTabChange = (index) => {
+  if (index === 1) handleFormValidation()
 }
 
 const submit = async () => {
@@ -131,10 +133,10 @@ const goToWhatsapp = () => {
       </h4>
     </template>
     <template #body>
-      <UTabs v-model="selectedTab" :items="tabs">
+      <UTabs v-model="selectedTab" :items="tabs" @change="handleTabChange">
         <template #item="{ item }">
           <div class="min-h-[495px] sm:min-h-[475px] h-full p-4 border border-1 rounded-md flex flex-col" :ui="{ body: { padding: 'px-4 py-4 sm:p-6' } }">
-            <template  v-if="item.key === 'form'">
+            <template v-if="item.key === 'form'">
               <h6 class="text-slate-700 dark:text-slate-200 mb-2 leading-5">
                 Introduzca los siguientes datos:
               </h6>
